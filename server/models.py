@@ -15,6 +15,12 @@ class Teacher(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable=False)
 
+    students = db.relationship('Student', back_populates='teacher')
+    groups = db.relationship('Group', back_populates='teacher', cascade='all, delete-orphan')
+    messages = db.relationship('Message', back_populates='teacher', cascade='all, delete-orphan')
+
+    serialize_rules = ('-students.teacher', '-students.groups', '-groups.teacher')
+
     def __repr__(self):
         return f'Teacher {self.id}: {self.username}'
     
@@ -25,7 +31,13 @@ class Student(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable=False)
 
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    teacher = db.relationship('Teacher', back_populates='students')
+
     groups = db.relationship('Group', secondary=student_groups, back_populates='students')
+    messages = db.relationship('Message', back_populates='student', cascade='all, delete-orphan')
+
+    serialize_rules = ('-groups.students', '-groups.messages',)
 
     def __repr__(self):
         return f'Student {self.id}: {self.username}'
@@ -37,7 +49,15 @@ class Group(db.Model, SerializerMixin):
     title = db.Column(db.String, unique=True)
     description = db.Column(db.String)
 
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    teacher = db.relationship('Teacher', back_populates='groups')
+
     students = db.relationship('Student', secondary=student_groups, back_populates='groups')
+    messages = db.relationship('Message', back_populates='group', cascade='all, delete-orphan')
+
+    serialize_rules = ('-teacher.students', '-teacher.groups', '-teacher.messages', 
+                       '-students.groups', '-students.messages', '-students.teacher',
+                       '-messages.teacher', '-messages.student', '-messages.group')
 
     def __repr__(self):
         return f'Group {self.id}: {self.title}'
@@ -47,7 +67,18 @@ class Message(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String)
-    # timestamp = db.Column(db.DateTime)
+
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=True)
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
+
+    teacher = db.relationship('Teacher', back_populates='messages')
+    student = db.relationship('Student', back_populates='messages')
+    group = db.relationship('Group', back_populates='messages')
+
+    serialize_rules = ('-teacher.groups', '-teacher.messages', '-teacher.students',
+                       '-student.groups', '-student.messages', '-student.groups',
+                       '-group.students', '-group.messages', '-group.teacher')
 
     def __repr__(self):
         return f'Message {self.id}: {self.body}'
