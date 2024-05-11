@@ -66,28 +66,30 @@ class CheckSession(Resource, SerializerMixin):
             student = Student.query.filter_by(id=student_id).first()
             return student.to_dict(), 200
         return {}, 204
-    
 api.add_resource(CheckSession, '/api/check_session')
 
 
 class Teachers(Resource, SerializerMixin):
     def get(self):
         return [teacher.to_dict() for teacher in Teacher.query.all()]
-    
 api.add_resource(Teachers, '/api/teachers')
+
+class TeachersById(Resource, SerializerMixin):
+    def get(self, id):
+        teacher = Teacher.query.filter_by(id=id).first()
+        return teacher.to_dict()
+api.add_resource(TeachersById, '/api/teachers/<int:id>')
 
 
 class Students(Resource, SerializerMixin):
     def get(self):
         return [student.to_dict() for student in Student.query.all()]
-    
 api.add_resource(Students, '/api/students')
 
 class StudentsById(Resource, SerializerMixin):
     def get(self, id):
         student = Student.query.filter_by(id=id).first()
         return student.to_dict()
-
 api.add_resource(StudentsById, '/api/students/<int:id>')
 
 
@@ -115,7 +117,6 @@ class Groups(Resource, SerializerMixin):
             return new_group.to_dict(), 201
         except IntegrityError:
             return {'error': 'could not create group'}, 422
-    
 api.add_resource(Groups, '/api/groups')
 
 class GroupsById(Resource, SerializerMixin):
@@ -155,15 +156,19 @@ class GroupsById(Resource, SerializerMixin):
             except:
                 return {'error': 'Unable to delete'}
         return {'error': 'Group not found'}
-    
 api.add_resource(GroupsById, '/api/groups/<int:id>')
 
 
 class Messages(Resource, SerializerMixin):
     def get(self):
         return [message.to_dict() for message in Message.query.all()]
-    
 api.add_resource(Messages, '/api/messages')
+
+class MessagesById(Resource, SerializerMixin):
+    def get(self, id):
+        message = Message.query.filter_by(id=id).first()
+        return message.to_dict()
+api.add_resource(MessagesById, '/api/messages/<int:id>')
 
 if __name__ == '__main__':
     sio.run(app, debug=True, port=5555)

@@ -19,7 +19,8 @@ class Teacher(db.Model, SerializerMixin):
     groups = db.relationship('Group', back_populates='teacher', cascade='all, delete-orphan')
     messages = db.relationship('Message', back_populates='teacher', cascade='all, delete-orphan')
 
-    serialize_rules = ('-students.teacher', '-students.groups', '-groups.teacher')
+    serialize_rules = ('-students.teacher', '-students.groups', '-students.messages', '-messages.teacher', 
+                       '-groups.teacher')
 
     def __repr__(self):
         return f'Teacher {self.id}: {self.username}'
@@ -37,7 +38,9 @@ class Student(db.Model, SerializerMixin):
     groups = db.relationship('Group', secondary=student_groups, back_populates='students')
     messages = db.relationship('Message', back_populates='student', cascade='all, delete-orphan')
 
-    serialize_rules = ('-groups.students', '-groups.messages',)
+    serialize_rules = ('-groups.students', '-groups.messages', '-teacher.students',
+                       '-teacher.groups', '-teacher.messages', '-teacher.password', 
+                       '-messages.teacher', '-messages.student', '-messages.group')
 
     def __repr__(self):
         return f'Student {self.id}: {self.username}'
