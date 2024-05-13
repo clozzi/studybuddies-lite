@@ -162,6 +162,34 @@ api.add_resource(GroupsById, '/api/groups/<int:id>')
 class Messages(Resource, SerializerMixin):
     def get(self):
         return [message.to_dict() for message in Message.query.all()]
+    
+    def post(self):
+        
+        request_json = request.get_json()
+        body = request_json.get('body')
+        group_id = request_json.get('group_id')
+
+        if session['teacher_id']:
+            new_message = Message(
+            body=body,
+            teacher_id=session['teacher_id'],
+            group_id=group_id
+            )
+
+        elif session['student_id']:
+            new_message = Message(
+            body=body,
+            student_id=session['student_id'],
+            group_id=group_id
+            )
+
+        try:
+            db.session.add(new_message)
+            db.session.commit()
+            return new_message.to_dict(), 201
+        except IntegrityError:
+            return {'error': 'could not create message'}, 422
+        
 api.add_resource(Messages, '/api/messages')
 
 class MessagesById(Resource, SerializerMixin):
@@ -169,6 +197,42 @@ class MessagesById(Resource, SerializerMixin):
         message = Message.query.filter_by(id=id).first()
         return message.to_dict()
 api.add_resource(MessagesById, '/api/messages/<int:id>')
+
+
+# active_users = []
+# store active_users on frontend in state based on leavejoin room
+
+
+
+@sio.on('connect')
+def handle_connect():
+    print('WS server connected')
+
+@sio.on('enter_room')
+def handle_enter_room(data):
+    print(data)
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    emit('user_joined', {'username':username, 'msg':username + ' has entered the chat.'}, to=room)
+
+@sio.on('leave_room')
+def handle_leave_room(data):
+    username = data['username']
+    room = data['room']
+    emit('user_left', {'username':username, 'msg':username + ' has left the chat.'}, to=room)
+    leave_room(room)
+
+
+@sio.on('send_message')
+def handle_send_message(msg):
+    print(msg)
+    emit('new_message', msg['username'] + ': ' + msg['userInput'], to=msg['room'])
+
+@sio.on('disconnect')
+def handle_disconnect():
+    print('WS server disconnected')
+
 
 if __name__ == '__main__':
     sio.run(app, debug=True, port=5555)

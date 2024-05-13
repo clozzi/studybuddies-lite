@@ -14,7 +14,7 @@ function App() {
       <NavBar />
       <h1>StudyBuddies Lite</h1>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login />} errorElement={<ErrorPage />}/>
         <Route path="/user/:id" element={<Home />} />
         <Route path="/groups/:id" element={<Group />} />
         <Route path="*" element={<ErrorPage />} />
