@@ -199,10 +199,7 @@ class MessagesById(Resource, SerializerMixin):
 api.add_resource(MessagesById, '/api/messages/<int:id>')
 
 
-# active_users = []
-# store active_users on frontend in state based on leavejoin room
-
-
+active_rooms = []
 
 @sio.on('connect')
 def handle_connect():
@@ -212,16 +209,30 @@ def handle_connect():
 def handle_enter_room(data):
     print(data)
     username = data['username']
-    room = data['room']
-    join_room(room)
-    emit('user_joined', {'username':username, 'msg':username + ' has entered the chat.'}, to=room)
+    roomID = data['room']
+    global active_rooms
+    room = next((room for room in active_rooms if room['room_id'] == data['room']), None)
+    if room is None:
+        room = {'room_id': data['room'], 'users': [username]}
+        active_rooms.append(room)
+    else:
+        room['users'].append(username)
+    print(active_rooms, 'from join')
+    join_room(roomID)
+    # emit('user_joined', {'msg':username + ' has entered the chat.'}, to=room)
+    emit('user_joined', room, to=roomID)
 
 @sio.on('leave_room')
 def handle_leave_room(data):
     username = data['username']
-    room = data['room']
-    emit('user_left', {'username':username, 'msg':username + ' has left the chat.'}, to=room)
-    leave_room(room)
+    roomID = data['room']
+    global active_rooms
+    for room in active_rooms:
+        if any(user == username for user in room['users']):
+            room['users'] = [user for user in room['users'] if user != username]
+    emit('user_left', room, to=roomID)
+    # emit('user_left', {'msg':username + ' has left the chat.'}, to=room)
+    leave_room(roomID)
 
 
 @sio.on('send_message')

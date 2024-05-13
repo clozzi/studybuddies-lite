@@ -33,13 +33,11 @@ function Group() {
     socket.on('connect', () => {
         socket.on('user_joined', (data) => {
             console.log(data)
-            setActiveUsers([...activeUsers, data.username])
+            setActiveUsers(data.users)
         })
         socket.on('user_left', (data) => {
             console.log(data)
-            const updatedUsers = activeUsers.filter(user => user.username !== data.username)
-            setActiveUsers(updatedUsers)
-            console.log(updatedUsers)
+            setActiveUsers(data.users)
         })
         socket.on('new_message', (data) => {
             console.log(data)
