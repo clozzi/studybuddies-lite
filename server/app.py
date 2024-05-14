@@ -158,6 +158,28 @@ class GroupsById(Resource, SerializerMixin):
         return {'error': 'Group not found'}
 api.add_resource(GroupsById, '/api/groups/<int:id>')
 
+class StudentsGroups(Resource, SerializerMixin):
+    def post(self):
+        if not session['teacher_id']:
+            return {'error': 'Unauthorized'}, 401
+        
+        request_json = request.get_json()
+        studentID = request_json.get('student_id')
+        groupID = request_json.get('group_id')
+
+        if studentID is None or groupID is None:
+            return {'error': 'Invalid data'}, 400
+        
+        try:
+            student = Student.query.filter_by(id=studentID).first()
+            group = Group.query.filter_by(id=groupID).first()
+            student.groups.append(group)
+            db.session.commit()
+            return {'msg': 'successfully associated'}, 201
+        except IntegrityError:
+            return {'error': 'could not enroll student'}, 422
+api.add_resource(StudentsGroups, '/api/students_groups')
+
 
 class Messages(Resource, SerializerMixin):
     def get(self):

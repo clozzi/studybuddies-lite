@@ -32,7 +32,7 @@ function Home() {
                             <br />
                             {user.students ? (
                                 <>
-                                {/* <NavLink to={`/groups/${group.id}/edit`}>Edit Group</NavLink> */}
+                                <NavLink to={`/student-groups/${group.id}`}>Edit Roster</NavLink>
                                 <button onClick={() => deleteGroup(group.id)}>Delete Group</button>
                                 </>
                             ) : (

@@ -58,8 +58,38 @@ function UserProvider({ children }) {
         }))
     }
 
+    function handleRemoveFromGroup(regId, groupId) {
+        setUser(user => ({
+            ...user,
+            groups: user.groups.map(group => {
+                if (group.id === groupId) {
+                    return {
+                        ...group,
+                        registrations: group.registrations.filter(reg => reg.id !== regId)
+                    }
+                }
+                return group
+            })
+        }))
+    }
 
-    return <UserContext.Provider value={{user, handleCreateGroup, handleDeleteGroup, updateUserGroups, setUser, logout}}>
+    function handleAddToGroup(username, groupId) {
+        setUser(user => ({
+            ...user,
+            groups: user.groups.map(group => {
+                if (group.id === groupId) {
+                    return {
+                        ...group,
+                        students: [...group.students, username]
+                    }
+                }
+                return group
+            })
+        }))
+    }
+
+
+    return <UserContext.Provider value={{user, handleCreateGroup, handleDeleteGroup, updateUserGroups, handleAddToGroup, setUser, logout}}>
             { children }</UserContext.Provider>
 }
 

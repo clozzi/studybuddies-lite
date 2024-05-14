@@ -6,7 +6,7 @@ import Home from "./components/pages/Home"
 import ErrorPage from "./components/pages/ErrorPage"
 import Group from "./components/pages/Group"
 import CreateGroup from "./components/restricted/CreateGroup"
-import EditGroup from "./components/restricted/EditGroup"
+import EditRoster from "./components/restricted/EditRoster"
 
 function App() {
 
@@ -20,7 +20,7 @@ function App() {
         <Route path="/user/:id" element={<Home />} />
         <Route path="/groups/:id" element={<Group />} />
         <Route path="/groups/new" element={<CreateGroup />} />
-        {/* <Route path="/groups/:id/edit" element={<EditGroup />} /> */}
+        <Route path="/student-groups/:id" element={<EditRoster />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </UserProvider>
