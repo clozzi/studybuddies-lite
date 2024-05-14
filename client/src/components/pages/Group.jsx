@@ -31,18 +31,21 @@ function Group() {
         socket.emit('enter_room', {'room':id, 'username':user.username})
     }
 
-    socket.on('connect', () => {
-        socket.on('user_joined', (data) => {
-            setActiveUsers(data.users)
+    useEffect(() => {
+        socket.on('connect', () => {
+            socket.on('user_joined', (data) => {
+                setActiveUsers(data.users)
+            })
+            socket.on('user_left', (data) => {
+                setActiveUsers(data.users)
+            })
+            socket.on('new_message', (data) => {
+                console.log(data)
+                setCurrentMessages(prevMessages => [...prevMessages, data])
+            })
         })
-        socket.on('user_left', (data) => {
-            setActiveUsers(data.users)
-        })
-        socket.on('new_message', (data) => {
-            console.log(data)
-            setCurrentMessages([...currentMessages, data])
-        })
-    })
+    }, [])
+    
 
     function disconnectWS() {
         socket.emit('leave_room', {room:id, username:user.username})
