@@ -91,6 +91,8 @@ function Group() {
                                 return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
                             } else if (msg.student) {
                                 return <p key={msg.id}><b>{msg.student.username}</b>: {msg.body}</p>
+                            } else {
+                                return null
                             }
                         })}
                     </div>
@@ -99,21 +101,23 @@ function Group() {
                             <p key={index}>{msg}</p>
                         ))}
                     </div>
-                    
                 </div>
-                {isOpen ? (
-                    <div>
-                        <label>Type Message Here: </label>
-                        <input type='text' 
-                            value={userInput} 
-                            onChange={(e) => {setUserInput(e.target.value)}}>
-                        </input>
-                        <button onClick={sendMessage}>Send</button>
-                        <button onClick={disconnectWS}>Disconnect</button>
-                    </div>
-                ) : (
-                    <button onClick={connectWS}>Activate Chat</button>
-                )}
+                <div>
+                   {isOpen ? (
+                        <div>
+                            <label>Type Message Here: </label>
+                            <input type='text' 
+                                value={userInput} 
+                                onChange={(e) => {setUserInput(e.target.value)}}>
+                            </input>
+                            <button onClick={sendMessage}>Send</button>
+                            <button onClick={disconnectWS}>Disconnect</button>
+                        </div>
+                    ) : (
+                        <button onClick={connectWS}>Activate Chat</button>
+                    )} 
+                </div>
+                
             </div>
         ) : (
             <h2>Loading...</h2>
