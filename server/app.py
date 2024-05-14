@@ -168,25 +168,25 @@ class Messages(Resource, SerializerMixin):
         request_json = request.get_json()
         body = request_json.get('body')
         group_id = request_json.get('group_id')
-
-        if session['teacher_id']:
-            new_message = Message(
-            body=body,
-            teacher_id=session['teacher_id'],
-            group_id=group_id
-            )
-
-        elif session['student_id']:
-            new_message = Message(
-            body=body,
-            student_id=session['student_id'],
-            group_id=group_id
-            )
-
         try:
-            db.session.add(new_message)
-            db.session.commit()
-            return new_message.to_dict(), 201
+            if session.get('teacher_id'):
+                new_message = Message(
+                body=body,
+                teacher_id=session['teacher_id'],
+                group_id=group_id
+                )
+                db.session.add(new_message)
+                db.session.commit()
+                return new_message.to_dict(), 201
+            elif session.get('student_id'):
+                new_message = Message(
+                body=body,
+                student_id=session['student_id'],
+                group_id=group_id
+                )
+                db.session.add(new_message)
+                db.session.commit()
+                return new_message.to_dict(), 201
         except IntegrityError:
             return {'error': 'could not create message'}, 422
         

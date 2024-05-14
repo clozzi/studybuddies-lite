@@ -13,6 +13,7 @@ function Group() {
     const [isOpen, setIsOpen] = useState(false)
     const [activeUsers, setActiveUsers] = useState(null)
     const [group, setGroup] = useState(null)
+    const [currentMessages, setCurrentMessages] = useState([])
 
     useEffect(() => {
         fetch(`/api/groups/${id}`)
@@ -25,7 +26,6 @@ function Group() {
     }, [id])
 
     function connectWS() {
-        console.log(group.messages)
         socket.connect()
         setIsOpen(true)
         socket.emit('enter_room', {'room':id, 'username':user.username})
@@ -40,6 +40,7 @@ function Group() {
         })
         socket.on('new_message', (data) => {
             console.log(data)
+            setCurrentMessages([...currentMessages, data])
         })
     })
 
@@ -81,13 +82,21 @@ function Group() {
                     )}
                 </div>
                 <div className="message-box">
-                    {group.messages.map((msg) => {
-                        if (msg.teacher) {
-                            return <p key={msg.id}>{msg.teacher.username}: {msg.body}</p>
-                        } else if (msg.student) {
-                            return <p key={msg.id}>{msg.student.username}: {msg.body}</p>
-                        }
-                    })}
+                    {/* <div className="old-messages"> */}
+                        {group.messages.map((msg) => {
+                            if (msg.teacher) {
+                                return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
+                            } else if (msg.student) {
+                                return <p key={msg.id}><b>{msg.student.username}</b>: {msg.body}</p>
+                            }
+                        })}
+                    {/* </div> */}
+                    {/* <div className="new-messages"> */}
+                        {currentMessages.map((msg, index) => (
+                            <p key={index}>{msg}</p>
+                        ))}
+                    {/* </div> */}
+                    
                 </div>
                 {isOpen ? (
                     <div>

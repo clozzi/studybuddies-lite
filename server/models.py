@@ -61,7 +61,7 @@ class Group(db.Model, SerializerMixin):
     serialize_rules = ('-teacher.students', '-teacher.groups', '-teacher.messages', 
                        '-students.groups', '-students.messages', '-students.teacher',
                         '-messages.group')
-# '-messages.teacher', '-messages.student',
+
     def __repr__(self):
         return f'Group {self.id}: {self.title}'
 
