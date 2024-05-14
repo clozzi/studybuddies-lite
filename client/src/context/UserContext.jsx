@@ -39,8 +39,27 @@ function UserProvider({ children }) {
         }))
     }
 
+    function handleDeleteGroup(id) {
+        setUser(user => ({
+            ...user,
+            groups: user.groups.filter(group => group.id !== id)
+        }))
+    }
 
-    return <UserContext.Provider value={{user, handleCreateGroup, setUser, logout}}>
+    function updateUserGroups(groupObj) {
+        setUser(user => ({
+            ...user,
+            groups: user.groups.map(group => {
+                if (group.id === groupObj.id) {
+                    return groupObj
+                }
+                return group
+            })
+        }))
+    }
+
+
+    return <UserContext.Provider value={{user, handleCreateGroup, handleDeleteGroup, updateUserGroups, setUser, logout}}>
             { children }</UserContext.Provider>
 }
 

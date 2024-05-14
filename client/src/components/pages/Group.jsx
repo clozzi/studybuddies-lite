@@ -1,19 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import EditGroup from "../restricted/EditGroup";
 
 var socket = io('http://localhost:5555', { autoConnect: false });
 
-// REMOVE ACTIVE USERS FROM HERE AND MOVE TO BE
 
 function Group() {
     const { id } = useParams()
-    const { user } = useContext(UserContext)
+    const { user, updateUserGroups } = useContext(UserContext)
     const [userInput, setUserInput] = useState("")
     const [isOpen, setIsOpen] = useState(false)
     const [activeUsers, setActiveUsers] = useState(null)
     const [group, setGroup] = useState(null)
     const [currentMessages, setCurrentMessages] = useState([])
+    const [isEditing, setIsEditing] = useState(false)
 
     useEffect(() => {
         fetch(`/api/groups/${id}`)
@@ -23,7 +24,7 @@ function Group() {
                 .then(data => setGroup(data))
             }
         })
-    }, [id])
+    }, [id, isEditing])
 
     function connectWS() {
         socket.connect()
@@ -67,14 +68,37 @@ function Group() {
         })
         setUserInput("")
     }
+
+    function handleUpdateGroup(updatedGroupObj) {
+        setIsEditing(false);
+        updateUserGroups(updatedGroupObj)
+    }
     
 
     return (
         <>
         {group ? (
             <div>
-                <h2>Group {group.title}</h2>
-                <p>Focus: {group.description}</p>
+                {isEditing ? (
+                    <EditGroup
+                    id={group.id}
+                    title={group.title}
+                    description={group.description}
+                    onUpdateGroup={handleUpdateGroup}
+                    />
+                ) : (
+                    <>
+                    <h2>Group {group.title}</h2>
+                    <p>Focus: {group.description}</p>
+                    </>
+                )}
+                {user.students ? (
+                    <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
+                        <span role="img" aria-label="edit">
+                        Edit Group Details ✏️
+                        </span>
+                    </button>
+                ) : null}
                 <div className="active-users-sidebar">
                     {activeUsers ? (
                         activeUsers.map((activeUser, index) => (
