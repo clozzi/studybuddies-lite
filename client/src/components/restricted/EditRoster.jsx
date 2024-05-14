@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserContext"
 
 function EditRoster() {
     const { id } = useParams()
-    const { user, handleRemoveFromGroup, handleAddToGroup } = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [studentId, setStudentId] = useState('')
     const [group, setGroup] = useState(null)
     const navigate = useNavigate()
@@ -21,9 +21,24 @@ function EditRoster() {
     }, [id])
 
     function handleRemoveStudent(SID) {
-        handleRemoveFromGroup(SID, )
-        fetch(`/api/students-groups`, {
-            method: 'DELETE'
+        fetch("/api/students_groups", {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                student_id: SID,
+                group_id: group.id
+            })
+        })
+        .then(r => {
+            if (r.status === 201) {
+                r.json().then(data => {
+                    setGroup(data)
+                })
+            } else {
+                alert("Failed to delete")
+            }
         })
     }
 
@@ -43,6 +58,7 @@ function EditRoster() {
             if (r.status === 201) {
                 r.json().then((data) => {
                     // handleAddToGroup(username, data.group_id)
+                    setGroup(data)
                     console.log(data)
                 })
             } else {
@@ -87,7 +103,7 @@ function EditRoster() {
                 )}
             </div>
         ) : (
-            <h2>Loading...</h2>
+            <h2>Unauthorized</h2>
         )}
             
         </>

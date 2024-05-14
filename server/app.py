@@ -175,9 +175,29 @@ class StudentsGroups(Resource, SerializerMixin):
             group = Group.query.filter_by(id=groupID).first()
             student.groups.append(group)
             db.session.commit()
-            return {'msg': 'successfully associated'}, 201
+            return group.to_dict(), 201
         except IntegrityError:
             return {'error': 'could not enroll student'}, 422
+        
+    def delete(self):
+        if not session['teacher_id']:
+            return {'error': 'Unauthorized'}, 401
+        
+        request_json = request.get_json()
+        studentID = request_json.get('student_id')
+        groupID = request_json.get('group_id')
+
+        if studentID is None or groupID is None:
+            return {'error': 'Invalid data'}, 400
+        
+        try:
+            student = Student.query.filter_by(id=studentID).first()
+            group = Group.query.filter_by(id=groupID).first()
+            student.groups.remove(group)
+            db.session.commit()
+            return group.to_dict(), 201
+        except IntegrityError:
+            return {'error': 'could not delete association'}, 422
 api.add_resource(StudentsGroups, '/api/students_groups')
 
 
