@@ -25,6 +25,7 @@ function Group() {
     }, [id])
 
     function connectWS() {
+        console.log(group.messages)
         socket.connect()
         setIsOpen(true)
         socket.emit('enter_room', {'room':id, 'username':user.username})
@@ -80,9 +81,13 @@ function Group() {
                     )}
                 </div>
                 <div className="message-box">
-                    {group.messages.map(msg => (
-                        <p key={msg.id}>{msg.body}</p>
-                    ))}
+                    {group.messages.map((msg) => {
+                        if (msg.teacher) {
+                            return <p key={msg.id}>{msg.teacher.username}: {msg.body}</p>
+                        } else if (msg.student) {
+                            return <p key={msg.id}>{msg.student.username}: {msg.body}</p>
+                        }
+                    })}
                 </div>
                 {isOpen ? (
                     <div>
