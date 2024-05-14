@@ -1,3 +1,70 @@
+body {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  /* align-items: center; */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  color: black;
+  background-color: #d1e0e0;
+  font-size: medium;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid black;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: gray;
+  color: white;
+}
+
+.nav-link {
+  color: black;
+  background-color: #d1e0e0;
+  font-size: medium;
+  padding: 15px;
+  border: 1px solid black;
+  border-radius: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.nav-link:hover {
+  background-color: gray;
+  color: white;
+}
+
+.user-group {
+  border: dotted;
+  padding: 15px;
+}
+
+.message-box {
+  border: dotted;
+  margin-left: 225px;
+  padding: 1px 16px;
+}
+
+.active-users-sidebar {
+  border: groove;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  overflow: auto;
+}
+
+/* .user-groups {
+  display: flex;
+  flex-direction: column;
+} */
+
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -67,18 +134,3 @@ button:focus-visible {
   }
 }
 
-.message-box {
-  border: dotted;
-  margin-left: 225px;
-  padding: 1px 16px;
-}
-
-.active-users-sidebar {
-  border: groove;
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
-  position: fixed;
-  overflow: auto;
-} */

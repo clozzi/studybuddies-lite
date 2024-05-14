@@ -73,7 +73,7 @@ function EditRoster() {
                     <div>
                         <h2>Group {group.title}</h2>
                         <p>Focus: {group.description}</p>
-                        <NavLink to={`/groups/${group.id}`}>Visit Group</NavLink>
+                        <NavLink to={`/groups/${group.id}`} className="nav-link">Visit Group</NavLink>
                         <form onSubmit={handleAddStudent}>
                             <label>Add Student to Group: </label>
                             <select name="students" id="students" onChange={(e) => setStudentId(e.target.value)}>

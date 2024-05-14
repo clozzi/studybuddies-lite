@@ -19,7 +19,7 @@ function Home() {
                 <h2>{user.username}'s Home Page</h2>
                 {user.students ? (
                     <div>
-                        <NavLink to='/groups/new'>Create New Group </NavLink>
+                        <NavLink to='/groups/new' className='nav-link'>Create New Group </NavLink>
                     </div>
                 ) : (
                     null
@@ -27,12 +27,12 @@ function Home() {
                 <div className="user-groups">
                     {user.groups.map((group) => (
                         <div className="user-group" key={group.id}>
-                            <p>Group Name: {group.title}</p>
-                            <NavLink to={`/groups/${group.id}`}>Visit Group</NavLink>
-                            <br />
+                            <h4>Group Name: {group.title}</h4>
+                            <p><b>Focus</b>: {group.description}</p>
+                            <NavLink to={`/groups/${group.id}`} className='nav-link'>Visit Group</NavLink>
                             {user.students ? (
                                 <>
-                                <NavLink to={`/student-groups/${group.id}`}>Edit Roster</NavLink>
+                                <NavLink to={`/student-groups/${group.id}`} className='nav-link'>Edit Roster</NavLink>
                                 <button onClick={() => deleteGroup(group.id)}>Delete Group</button>
                                 </>
                             ) : (

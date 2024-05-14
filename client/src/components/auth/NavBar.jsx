@@ -8,16 +8,10 @@ function NavBar() {
     return (
         <div>
             {user ? (
-                <>
-                <NavLink to={`/user/${user.id}`} style={({ isActive, isPending, isTransitioning }) => {
-                    return {
-                    fontWeight: isActive ? "bold" : "",
-                    color: isPending ? "red" : "black",
-                    viewTransitionName: isTransitioning ? "slide" : "",
-                    };
-                }}>Home</NavLink>
+                <nav id="navbar">
+                <NavLink to={`/user/${user.id}`} className='nav-link'>Home</NavLink>
                 <button onClick={logout}>Logout</button>
-                </>
+                </nav>
             ) : (
                 null
             )}
@@ -26,3 +20,11 @@ function NavBar() {
 }
 
 export default NavBar
+
+// style={({ isActive, isPending, isTransitioning }) => {
+//                     return {
+//                     fontWeight: isActive ? "bold" : "",
+//                     color: isPending ? "red" : "black",
+//                     viewTransitionName: isTransitioning ? "slide" : "",
+//                     };
+//                 }}
