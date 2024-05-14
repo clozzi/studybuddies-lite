@@ -5,7 +5,7 @@ const UserContext = createContext({})
 
 function UserProvider({ children }) {
     const [user, setUser] = useState(null)
-    const [userGroups, setUserGroups] = useState(null)
+    // const [userGroups, setUserGroups] = useState(null)
     const navigate = useNavigate()
 
 
@@ -16,7 +16,7 @@ function UserProvider({ children }) {
                 r.json().then(data => {
                     // console.log(data)
                     setUser(data)
-                    setUserGroups(data.groups)
+                    // setUserGroups(data.groups)
                 })
             }
         })
@@ -28,12 +28,19 @@ function UserProvider({ children }) {
             method: "DELETE"
         })
         setUser(null)
-        setUserGroups(null)
+        // setUserGroups(null)
         navigate("/")
     }
 
+    function handleCreateGroup(group) {
+        setUser(user => ({
+            ...user,
+            groups: [...user.groups, group]
+        }))
+    }
 
-    return <UserContext.Provider value={{user, userGroups, setUser, logout}}>
+
+    return <UserContext.Provider value={{user, handleCreateGroup, setUser, logout}}>
             { children }</UserContext.Provider>
 }
 

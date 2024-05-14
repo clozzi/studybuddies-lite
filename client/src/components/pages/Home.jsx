@@ -10,6 +10,15 @@ function Home() {
         {user ? (
             <div className="user-home">
                 <h2>{user.username}'s Home Page</h2>
+                {user.students ? (
+                    <div>
+                        <NavLink to='/groups/new'>Create New Group </NavLink>
+                        <br/>
+                        <NavLink to='/teacher-groups'> Add/Remove Students</NavLink>
+                    </div>
+                ) : (
+                    null
+                )}
                 <div className="user-groups">
                     {user.groups.map((group) => (
                         <div className="user-group" key={group.id}>

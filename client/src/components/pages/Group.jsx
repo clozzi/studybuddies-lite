@@ -85,7 +85,7 @@ function Group() {
                     )}
                 </div>
                 <div className="message-box">
-                    {/* <div className="old-messages"> */}
+                    <div className="old-messages">
                         {group.messages.map((msg) => {
                             if (msg.teacher) {
                                 return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
@@ -93,12 +93,12 @@ function Group() {
                                 return <p key={msg.id}><b>{msg.student.username}</b>: {msg.body}</p>
                             }
                         })}
-                    {/* </div> */}
-                    {/* <div className="new-messages"> */}
+                    </div>
+                    <div className="new-messages">
                         {currentMessages.map((msg, index) => (
                             <p key={index}>{msg}</p>
                         ))}
-                    {/* </div> */}
+                    </div>
                     
                 </div>
                 {isOpen ? (

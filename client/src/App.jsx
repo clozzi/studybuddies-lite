@@ -5,6 +5,7 @@ import NavBar from "./components/auth/NavBar"
 import Home from "./components/pages/Home"
 import ErrorPage from "./components/pages/ErrorPage"
 import Group from "./components/pages/Group"
+import CreateGroup from "./components/restricted/CreateGroup"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Login />} errorElement={<ErrorPage />}/>
         <Route path="/user/:id" element={<Home />} />
         <Route path="/groups/:id" element={<Group />} />
+        <Route path="/groups/new" element={<CreateGroup />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </UserProvider>
