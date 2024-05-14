@@ -11,7 +11,7 @@ function Group() {
     const { user } = useContext(UserContext)
     const [userInput, setUserInput] = useState("")
     const [isOpen, setIsOpen] = useState(false)
-    const [activeUsers, setActiveUsers] = useState([])
+    const [activeUsers, setActiveUsers] = useState(null)
     const [group, setGroup] = useState(null)
 
     useEffect(() => {
@@ -32,11 +32,9 @@ function Group() {
 
     socket.on('connect', () => {
         socket.on('user_joined', (data) => {
-            console.log(data)
             setActiveUsers(data.users)
         })
         socket.on('user_left', (data) => {
-            console.log(data)
             setActiveUsers(data.users)
         })
         socket.on('new_message', (data) => {
@@ -46,6 +44,7 @@ function Group() {
 
     function disconnectWS() {
         socket.emit('leave_room', {room:id, username:user.username})
+        socket.disconnect()
         setIsOpen(false)
     }
 
@@ -64,7 +63,6 @@ function Group() {
         setUserInput("")
     }
     
-    // console.log(activeUsers)
 
     return (
         <>
@@ -73,7 +71,7 @@ function Group() {
                 <h2>Group {group.title}</h2>
                 <p>Focus: {group.description}</p>
                 <div className="active-users-sidebar">
-                    {activeUsers.length ? (
+                    {activeUsers ? (
                         activeUsers.map((activeUser, index) => (
                             <p key={index}>{activeUser}</p>
                         ))

@@ -207,7 +207,6 @@ def handle_connect():
 
 @sio.on('enter_room')
 def handle_enter_room(data):
-    print(data)
     username = data['username']
     roomID = data['room']
     global active_rooms
@@ -219,7 +218,6 @@ def handle_enter_room(data):
         room['users'].append(username)
     print(active_rooms, 'from join')
     join_room(roomID)
-    # emit('user_joined', {'msg':username + ' has entered the chat.'}, to=room)
     emit('user_joined', room, to=roomID)
 
 @sio.on('leave_room')
@@ -231,7 +229,6 @@ def handle_leave_room(data):
         if any(user == username for user in room['users']):
             room['users'] = [user for user in room['users'] if user != username]
     emit('user_left', room, to=roomID)
-    # emit('user_left', {'msg':username + ' has left the chat.'}, to=room)
     leave_room(roomID)
 
 
