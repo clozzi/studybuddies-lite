@@ -29,6 +29,7 @@ function Group() {
 
     useEffect(() => {
         console.log(location.pathname)
+        // socket.emit('special_disconnect', user.username)
     }, [location])
     // window.addEventListener('beforeunload', disconnectWS)
     // document.onvisibilitychange = function() {
@@ -47,14 +48,25 @@ function Group() {
         socket.on('connect', () => {
             socket.on('user_joined', (data) => {
                 setActiveUsers(data.users)
+                // let userRoom = data.filter(room => room.room_id !== id)
+                // console.log(userRoom)
+                // setActiveUsers(userRoom.users)
             })
             socket.on('user_left', (data) => {
                 setActiveUsers(data.users)
+                // let userRoom = data.filter(room => room.room_id !== id)
+                // console.log(userRoom)
+                // setActiveUsers(userRoom.users)
             })
             socket.on('new_message', (data) => {
                 console.log(data)
                 setCurrentMessages(prevMessages => [...prevMessages, data])
             })
+            // socket.on('user_bad', (data) => {
+            //     let userRoom = data.filter(room => room.room_id !== id)
+            //     console.log(userRoom)
+            //     setActiveUsers(userRoom.users)
+            // })
         })
     }, [])
     
@@ -121,11 +133,11 @@ function Group() {
                 <div className="message-box">
                     <div className="active-users-sidebar">
                         {activeUsers.length ? (
-                            activeUsers.map((activeUser, index) => (
-                                <p key={index}>{activeUser}</p>
-                            ))
-                        ) : (
-                            <p>No One Yet!</p>
+                                activeUsers.map((activeUser, index) => (
+                                    <p key={index}>{activeUser}</p>
+                                ))
+                            ) : (
+                                <p>No One Yet!</p>
                         )}
                     </div>
                     <div className="messages">
