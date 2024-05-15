@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import EditGroup from "../restricted/EditGroup";
 
@@ -8,6 +8,7 @@ var socket = io('http://localhost:5555', { autoConnect: false });
 
 function Group() {
     const { id } = useParams()
+    const location = useLocation()
     const { user, updateUserGroups } = useContext(UserContext)
     const [userInput, setUserInput] = useState("")
     const [isOpen, setIsOpen] = useState(false)
@@ -25,6 +26,10 @@ function Group() {
             }
         })
     }, [id, isEditing])
+
+    useEffect(() => {
+        disconnectWS()
+    }, [location])
 
     function connectWS() {
         socket.connect()
