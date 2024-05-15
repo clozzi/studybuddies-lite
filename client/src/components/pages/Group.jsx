@@ -78,7 +78,7 @@ function Group() {
     return (
         <>
         {group ? (
-            <div>
+            <div className="group">
                 {isEditing ? (
                     <EditGroup
                     id={group.id}
@@ -98,7 +98,7 @@ function Group() {
                         Edit Group Details ✏️
                         </span>
                     </button>
-                ) : null}
+                ) : (null)}
                 <div className="active-users-sidebar">
                     {activeUsers ? (
                         activeUsers.map((activeUser, index) => (

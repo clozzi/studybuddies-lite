@@ -57,9 +57,7 @@ function EditRoster() {
         .then((r) => {
             if (r.status === 201) {
                 r.json().then((data) => {
-                    // handleAddToGroup(username, data.group_id)
                     setGroup(data)
-                    console.log(data)
                 })
             } else {
                 alert('Failed to register student')

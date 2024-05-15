@@ -43,6 +43,12 @@ button:hover {
   padding: 15px;
 }
 
+.group {
+  display: grid;
+  /* justify-content: center;
+  text-align: center; */
+}
+
 .message-box {
   border: dotted;
   margin-left: 225px;

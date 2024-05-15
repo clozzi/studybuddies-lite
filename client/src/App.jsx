@@ -14,7 +14,7 @@ function App() {
     <>
     <UserProvider>
       <NavBar />
-      <h1>StudyBuddies Lite</h1>
+      <h1>StudyBuddies</h1>
       <Routes>
         <Route path="/" element={<Login />} errorElement={<ErrorPage />}/>
         <Route path="/user/:id" element={<Home />} />
