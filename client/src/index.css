@@ -52,6 +52,8 @@ button:hover {
 
 .messages {
   overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
   border: inset;
   padding: 15px;
 }

@@ -12,7 +12,7 @@ function Group() {
     const { user, updateUserGroups } = useContext(UserContext)
     const [userInput, setUserInput] = useState("")
     const [isOpen, setIsOpen] = useState(false)
-    const [activeUsers, setActiveUsers] = useState(null)
+    const [activeUsers, setActiveUsers] = useState([])
     const [group, setGroup] = useState(null)
     const [currentMessages, setCurrentMessages] = useState([])
     const [isEditing, setIsEditing] = useState(false)
@@ -28,8 +28,14 @@ function Group() {
     }, [id, isEditing])
 
     useEffect(() => {
-        disconnectWS()
+        console.log(location.pathname)
     }, [location])
+    // window.addEventListener('beforeunload', disconnectWS)
+    // document.onvisibilitychange = function() {
+    //     if (document.visibilityState === 'hidden') {
+    //       disconnectWS();
+    //     }
+    //   };
 
     function connectWS() {
         socket.connect()
@@ -98,17 +104,23 @@ function Group() {
                         <p>Focus: {group.description}</p>
                         </>
                     )}
-                    {user.students ? (
-                        <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
-                            <span role="img" aria-label="edit">
-                            Edit Group Details ✏️
-                            </span>
-                        </button>
-                    ) : (null)} 
+                    {user ? (
+                        user.students ? (
+                            <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
+                                <span role="img" aria-label="edit">
+                                Edit Group Details ✏️
+                                </span>
+                            </button>
+                        ) : (
+                            null
+                        )
+                    ) : (
+                        null
+                    )}
                 </div>
                 <div className="message-box">
                     <div className="active-users-sidebar">
-                        {activeUsers ? (
+                        {activeUsers.length ? (
                             activeUsers.map((activeUser, index) => (
                                 <p key={index}>{activeUser}</p>
                             ))

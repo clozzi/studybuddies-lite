@@ -252,10 +252,12 @@ def handle_enter_room(data):
     username = data['username']
     roomID = data['room']
     global active_rooms
-    room = next((room for room in active_rooms if room['room_id'] == data['room']), None)
+    room = next((room for room in active_rooms if room['room_id'] == roomID), None)
     if room is None:
-        room = {'room_id': data['room'], 'users': [username]}
+        room = {'room_id': roomID, 'users': [username]}
         active_rooms.append(room)
+    elif username in room['users']:
+        print('user already connected')
     else:
         room['users'].append(username)
     print(active_rooms, 'from join')
@@ -270,6 +272,12 @@ def handle_leave_room(data):
     for room in active_rooms:
         if any(user == username for user in room['users']):
             room['users'] = [user for user in room['users'] if user != username]
+    # room = next((room for room in active_rooms if room['room_id'] == roomID), None)
+    # if room is None:
+    #     print('no room detected')
+    # else:
+    #     room['users'].remove(username)
+    print(active_rooms, 'from leave')
     emit('user_left', room, to=roomID)
     leave_room(roomID)
 
