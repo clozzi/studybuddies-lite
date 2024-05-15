@@ -79,55 +79,61 @@ function Group() {
         <>
         {group ? (
             <div className="group">
-                {isEditing ? (
-                    <EditGroup
-                    id={group.id}
-                    title={group.title}
-                    description={group.description}
-                    onUpdateGroup={handleUpdateGroup}
-                    />
-                ) : (
-                    <>
-                    <h2>Group {group.title}</h2>
-                    <p>Focus: {group.description}</p>
-                    </>
-                )}
-                {user.students ? (
-                    <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
-                        <span role="img" aria-label="edit">
-                        Edit Group Details ✏️
-                        </span>
-                    </button>
-                ) : (null)}
-                <div className="active-users-sidebar">
-                    {activeUsers ? (
-                        activeUsers.map((activeUser, index) => (
-                            <p key={index}>{activeUser}</p>
-                        ))
+                <div className="group-details">
+                   {isEditing ? (
+                        <EditGroup
+                        id={group.id}
+                        title={group.title}
+                        description={group.description}
+                        onUpdateGroup={handleUpdateGroup}
+                        />
                     ) : (
-                        <p>No One Yet!</p>
+                        <>
+                        <h2>Group: {group.title}</h2>
+                        <p>Focus: {group.description}</p>
+                        </>
                     )}
+                    {user.students ? (
+                        <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
+                            <span role="img" aria-label="edit">
+                            Edit Group Details ✏️
+                            </span>
+                        </button>
+                    ) : (null)} 
                 </div>
                 <div className="message-box">
-                    <div className="old-messages">
-                        {group.messages.map((msg) => {
-                            if (msg.teacher) {
-                                return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
-                            } else if (msg.student) {
-                                return <p key={msg.id}><b>{msg.student.username}</b>: {msg.body}</p>
-                            } else {
-                                return null
-                            }
-                        })}
+                    <div className="active-users-sidebar">
+                        {activeUsers ? (
+                            activeUsers.map((activeUser, index) => (
+                                <p key={index}>{activeUser}</p>
+                            ))
+                        ) : (
+                            <p>No One Yet!</p>
+                        )}
                     </div>
-                    <div className="new-messages">
-                        {currentMessages.map((msg, index) => (
-                            <p key={index}>{msg}</p>
-                        ))}
+                    <div className="messages">
+                        <span className="old-messages">
+                            {group.messages.map((msg) => {
+                                if (msg.teacher) {
+                                    return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
+                                } else if (msg.student) {
+                                    return <p key={msg.id}><b>{msg.student.username}</b>: {msg.body}</p>
+                                } else {
+                                    return null
+                                }
+                            })}
+                        </span>
+                        <span className="new-messages">
+                            {currentMessages.map((msg, index) => (
+                                <p key={index}>{msg}</p>
+                            ))}
+                        </span>
                     </div>
+                
+                    
                 </div>
-                <div>
-                   {isOpen ? (
+                <div className="message-input">
+                {isOpen ? (
                         <div>
                             <label>Type Message Here: </label>
                             <input type='text' 
