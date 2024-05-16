@@ -260,7 +260,6 @@ def handle_enter_room(data):
         print('user already connected')
     else:
         room['users'].append(username)
-    print(active_rooms, 'from join')
     join_room(roomID)
     emit('user_joined', room, to=roomID)
 
@@ -277,28 +276,26 @@ def handle_leave_room(data):
         print('no room detected')
     else:
         room['users'].remove(username)
-    print(active_rooms, 'from leave')
     emit('user_left', room, to=roomID)
     leave_room(roomID)
 
 
 @sio.on('send_message')
 def handle_send_message(msg):
-    print(msg)
     emit('new_message', msg['username'] + ': ' + msg['userInput'], to=msg['room'])
 
 @sio.on('disconnect')
 def handle_disconnect():
     print('WS server disconnected')
 
-@sio.on('special_disconnect')
-def handle_bad_user(username):
-    global active_rooms
-    for room in active_rooms:
-        if any(user == username for user in room['users']):
-            room['users'] = [user for user in room['users'] if user != username]
-    print(active_rooms)
-    emit('user_bad', active_rooms, broadcast=True)
+# @sio.on('special_disconnect')
+# def handle_bad_user(username):
+#     global active_rooms
+#     for room in active_rooms:
+#         if any(user == username for user in room['users']):
+#             room['users'] = [user for user in room['users'] if user != username]
+#     print(active_rooms)
+#     emit('user_bad', active_rooms, broadcast=True)
 
 
 if __name__ == '__main__':

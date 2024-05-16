@@ -57,20 +57,15 @@ function Group() {
         socket.on('connect', () => {
             socket.on('user_joined', (data) => {
                 setActiveUsers(data.users)
-                // let userRoom = data.filter(room => room.room_id !== id)
-                // console.log(userRoom)
-                // setActiveUsers(userRoom.users)
             })
             socket.on('user_left', (data) => {
                 setActiveUsers(data.users)
-                // let userRoom = data.filter(room => room.room_id !== id)
-                // console.log(userRoom)
-                // setActiveUsers(userRoom.users)
             })
             socket.on('new_message', (data) => {
-                console.log(data)
                 setCurrentMessages(prevMessages => [...prevMessages, data])
             })
+            // NEED THE DISCONNECT ON PAGE CHANGE
+            // SEND FULL ACTIVE USER LIST EVERY TIME AND UPDATE WITH FILTER?
             // socket.on('user_bad', (data) => {
             //     let userRoom = data.filter(room => room.room_id !== id)
             //     console.log(userRoom)
