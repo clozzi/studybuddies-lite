@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import { useFormik } from "formik"
 import * as yup from "yup"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { UserContext } from "../../context/UserContext"
 
 function Login() {
@@ -40,7 +40,6 @@ function Login() {
             }})
         }
     })
-        
 
 
     return (

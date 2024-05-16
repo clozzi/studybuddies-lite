@@ -50,9 +50,7 @@ button:hover {
 }
 
 .messages {
-  /* overflow: auto; */
   overflow-y: scroll;
-  /* display: flex; */
   flex-direction: column;
   border: inset;
   padding: 15px;

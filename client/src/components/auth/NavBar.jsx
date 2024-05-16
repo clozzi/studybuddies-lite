@@ -20,11 +20,3 @@ function NavBar() {
 }
 
 export default NavBar
-
-// style={({ isActive, isPending, isTransitioning }) => {
-//                     return {
-//                     fontWeight: isActive ? "bold" : "",
-//                     color: isPending ? "red" : "black",
-//                     viewTransitionName: isTransitioning ? "slide" : "",
-//                     };
-//                 }}
