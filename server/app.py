@@ -15,6 +15,7 @@ class Home(Resource, SerializerMixin):
     
 api.add_resource(Home, '/')
 
+
 # for testing purposes only
 class Signup(Resource, SerializerMixin):
 
@@ -35,8 +36,6 @@ class Signup(Resource, SerializerMixin):
                         username=username
                     )
                     new_teacher.password_hash = password
-                    # students = Student.query.all()
-                    # new_teacher.students.extend(students)
                     db.session.add(new_teacher)
                     db.session.commit()
                     session['teacher_id'] = new_teacher.id
@@ -52,7 +51,6 @@ class Signup(Resource, SerializerMixin):
                         teacher_id=teacher.id
                     )
                     new_student.password_hash = password
-                    # new_student.teacher.extend(teacher)
                     db.session.add(new_student)
                     db.session.commit()
                     session['student_id'] = new_student.id
@@ -60,8 +58,10 @@ class Signup(Resource, SerializerMixin):
         
         except IntegrityError:
             return {'error': 'Could not create user'}, 422
+        
 api.add_resource(Signup, '/api/signup')
 #  remove signup after testing
+
 
 class Login(Resource, SerializerMixin):
     def post(self):
@@ -118,30 +118,36 @@ class CheckSession(Resource, SerializerMixin):
             student = Student.query.filter_by(id=student_id).first()
             return student.to_dict(), 200
         return {}, 204
+    
 api.add_resource(CheckSession, '/api/check_session')
+
 
 
 class Teachers(Resource, SerializerMixin):
     def get(self):
         return [teacher.to_dict() for teacher in Teacher.query.all()]
+    
 api.add_resource(Teachers, '/api/teachers')
 
 class TeachersById(Resource, SerializerMixin):
     def get(self, id):
         teacher = Teacher.query.filter_by(id=id).first()
         return teacher.to_dict()
+    
 api.add_resource(TeachersById, '/api/teachers/<int:id>')
 
 
 class Students(Resource, SerializerMixin):
     def get(self):
         return [student.to_dict() for student in Student.query.all()]
+    
 api.add_resource(Students, '/api/students')
 
 class StudentsById(Resource, SerializerMixin):
     def get(self, id):
         student = Student.query.filter_by(id=id).first()
         return student.to_dict()
+    
 api.add_resource(StudentsById, '/api/students/<int:id>')
 
 
@@ -169,6 +175,7 @@ class Groups(Resource, SerializerMixin):
             return new_group.to_dict(), 201
         except IntegrityError:
             return {'error': 'could not create group'}, 422
+        
 api.add_resource(Groups, '/api/groups')
 
 class GroupsById(Resource, SerializerMixin):
@@ -208,7 +215,9 @@ class GroupsById(Resource, SerializerMixin):
             except:
                 return {'error': 'Unable to delete'}
         return {'error': 'Group not found'}
+    
 api.add_resource(GroupsById, '/api/groups/<int:id>')
+
 
 class StudentsGroups(Resource, SerializerMixin):
     def post(self):
@@ -250,6 +259,7 @@ class StudentsGroups(Resource, SerializerMixin):
             return group.to_dict(), 201
         except IntegrityError:
             return {'error': 'could not delete association'}, 422
+        
 api.add_resource(StudentsGroups, '/api/students_groups')
 
 
@@ -290,7 +300,10 @@ class MessagesById(Resource, SerializerMixin):
     def get(self, id):
         message = Message.query.filter_by(id=id).first()
         return message.to_dict()
+    
 api.add_resource(MessagesById, '/api/messages/<int:id>')
+
+
 
 
 active_rooms = []
@@ -330,7 +343,6 @@ def handle_leave_room(data):
         room['users'].remove(username)
     emit('user_left', room, to=roomID)
     leave_room(roomID)
-
 
 @sio.on('send_message')
 def handle_send_message(msg):

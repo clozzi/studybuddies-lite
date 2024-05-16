@@ -20,10 +20,10 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 migrate = Migrate(app, db)
-db.init_app(app)
-
 bcrypt = Bcrypt(app)
 api = Api(app)
+db.init_app(app)
+
 
 CORS(app, resources={r"/*":{"origins":"*"}})
 sio = SocketIO(app, cors_allowed_origins="*")
