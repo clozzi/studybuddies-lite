@@ -17,6 +17,7 @@ function Group() {
     const [currentMessages, setCurrentMessages] = useState([])
     const [isEditing, setIsEditing] = useState(false)
 
+
     useEffect(() => {
         fetch(`/api/groups/${id}`)
         .then(r => {
@@ -36,10 +37,10 @@ function Group() {
     // }, [group])
 
     // TRYING TO DISCONNECT ON ROUTE CHANGE
-    useEffect(() => {
-        console.log(location.pathname)
+    // useEffect(() => {
+        // console.log(location.pathname)
         // socket.emit('special_disconnect', user.username)
-    }, [location])
+    // }, [location])
     // window.addEventListener('beforeunload', disconnectWS)
     // document.onvisibilitychange = function() {
     //     if (document.visibilityState === 'hidden') {
@@ -73,7 +74,6 @@ function Group() {
             // })
         })
     }, [])
-    
 
     function disconnectWS() {
         socket.emit('leave_room', {room:id, username:user.username})
@@ -162,8 +162,6 @@ function Group() {
                             ))}
                         {/* </div> */}
                     </div>
-                
-                    
                 </div>
                 <div className="message-input">
                 {isOpen ? (
@@ -180,7 +178,6 @@ function Group() {
                         <button onClick={connectWS}>Activate Chat</button>
                     )} 
                 </div>
-                
             </div>
         ) : (
             <h2>Loading...</h2>
