@@ -27,6 +27,15 @@ function Group() {
         })
     }, [id, isEditing])
 
+    // START MSG BOX SCROLLED TO BOTTOM
+    // useEffect(() => {
+        // let msgBox = document.querySelector(".messages")
+        // msgBox.scrollTop = msgBox.scrollHeight
+        // msgBox.scrollIntoView({behavior:"smooth", block: "end"})
+        // console.log(msgBox)
+    // }, [group])
+
+    // TRYING TO DISCONNECT ON ROUTE CHANGE
     useEffect(() => {
         console.log(location.pathname)
         // socket.emit('special_disconnect', user.username)
@@ -141,7 +150,7 @@ function Group() {
                         )}
                     </div>
                     <div className="messages">
-                        <span className="old-messages">
+                        {/* <div className="old-messages"> */}
                             {group.messages.map((msg) => {
                                 if (msg.teacher) {
                                     return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
@@ -151,12 +160,12 @@ function Group() {
                                     return null
                                 }
                             })}
-                        </span>
-                        <span className="new-messages">
+                        {/* </div> */}
+                        {/* <div className="new-messages"> */}
                             {currentMessages.map((msg, index) => (
                                 <p key={index}>{msg}</p>
                             ))}
-                        </span>
+                        {/* </div> */}
                     </div>
                 
                     

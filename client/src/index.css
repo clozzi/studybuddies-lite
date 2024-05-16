@@ -45,15 +45,15 @@ button:hover {
   display: inline-flex;
   padding: 15px;
   border: solid;
-  /* height: 50vh; */
   height: auto;
   max-height: 50vh;
 }
 
 .messages {
-  overflow: auto;
-  display: flex;
-  flex-direction: column-reverse;
+  /* overflow: auto; */
+  overflow-y: scroll;
+  /* display: flex; */
+  flex-direction: column;
   border: inset;
   padding: 15px;
 }
