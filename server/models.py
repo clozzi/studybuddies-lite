@@ -1,7 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
-from config import db
+from config import db, bcrypt
 
 student_groups = db.Table(
     'students_groups',
@@ -14,7 +14,7 @@ class Teacher(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
-    password = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
 
     students = db.relationship('Student', back_populates='teacher')
     groups = db.relationship('Group', back_populates='teacher', cascade='all, delete-orphan')
@@ -22,6 +22,18 @@ class Teacher(db.Model, SerializerMixin):
 
     serialize_rules = ('-students.teacher', '-students.groups', '-students.messages', '-messages.teacher', 
                        '-groups.teacher')
+    
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError("No peeking!")
+    
+    @password_hash.setter
+    def password_hash(self, password):
+        new_hashed_password = bcrypt.generate_password_hash(password.encode('utf-8'))
+        self._password_hash = new_hashed_password.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
         return f'Teacher {self.id}: {self.username}'
@@ -31,7 +43,7 @@ class Student(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
-    password = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
 
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     teacher = db.relationship('Teacher', back_populates='students')
@@ -42,6 +54,18 @@ class Student(db.Model, SerializerMixin):
     serialize_rules = ('-groups.students', '-groups.messages', '-teacher.students',
                        '-teacher.groups', '-teacher.messages', '-teacher.password', 
                        '-messages.teacher', '-messages.student', '-messages.group')
+    
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError("No peeking!")
+    
+    @password_hash.setter
+    def password_hash(self, password):
+        new_hashed_password = bcrypt.generate_password_hash(password.encode('utf-8'))
+        self._password_hash = new_hashed_password.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
         return f'Student {self.id}: {self.username}'

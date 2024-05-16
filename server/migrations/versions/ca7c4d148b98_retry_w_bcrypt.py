@@ -1,8 +1,8 @@
-"""initial
+"""retry w bcrypt
 
-Revision ID: e5b3903d0abf
+Revision ID: ca7c4d148b98
 Revises: 
-Create Date: 2024-05-11 13:30:05.800977
+Create Date: 2024-05-16 11:32:18.924531
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e5b3903d0abf'
+revision = 'ca7c4d148b98'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('teachers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=True),
-    sa.Column('password', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
     )
@@ -37,7 +37,7 @@ def upgrade():
     op.create_table('students',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=True),
-    sa.Column('password', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=True),
     sa.Column('teacher_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], name=op.f('fk_students_teacher_id_teachers')),
     sa.PrimaryKeyConstraint('id'),

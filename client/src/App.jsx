@@ -7,6 +7,7 @@ import ErrorPage from "./components/pages/ErrorPage"
 import Group from "./components/pages/Group"
 import CreateGroup from "./components/restricted/CreateGroup"
 import EditRoster from "./components/restricted/EditRoster"
+import Signup from "./components/auth/Signup"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <h1>StudyBuddies</h1>
       <Routes>
         <Route path="/" element={<Login />} errorElement={<ErrorPage />}/>
+        <Route path="/signup" element={<Signup />} />
         <Route path="/user/:id" element={<Home />} />
         <Route path="/groups/:id" element={<Group />} />
         <Route path="/groups/new" element={<CreateGroup />} />

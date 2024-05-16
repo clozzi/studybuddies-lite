@@ -18,16 +18,16 @@ if __name__ == '__main__':
 
         print('Seeding...')
         t1 = Teacher(
-            username='Bob',
-            password='123'
+            username='Bob'
+            # password='123'
         )
         t2 = Teacher(
             username='Fred',
-            password='123'
+            # password='123'
         )
         t3 = Teacher(
             username='Charles',
-            password='123'
+            # password='123'
         )
         teachers = [t1,t2,t3]
         db.session.add_all(teachers)
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         for i in range(20):
             student = Student(
                 username=fake.unique.first_name(),
-                password='123'
+                # password='123'
             )
             student.teacher = t1
             t1students.append(student)
@@ -49,7 +49,7 @@ if __name__ == '__main__':
         for i in range(20):
             student = Student(
                 username=fake.unique.first_name(),
-                password='123'
+                # password='123'
             )
             student.teacher = t2
             t2students.append(student)
@@ -61,7 +61,7 @@ if __name__ == '__main__':
         for i in range(20):
             student = Student(
                 username=fake.unique.first_name(),
-                password='123'
+                # password='123'
             )
             student.teacher = t3
             t3students.append(student)

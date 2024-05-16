@@ -1,10 +1,11 @@
-import { NavLink, useNavigate } from "react-router-dom"
-import { useFormik } from "formik"
-import * as yup from "yup"
-import { useContext, useState } from "react"
-import { UserContext } from "../../context/UserContext"
+import { useFormik } from 'formik';
+import { useContext } from 'react';
+import * as yup from "yup";
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
-function Login() {
+
+function Signup() {
     const { setUser } = useContext(UserContext)
     const navigate = useNavigate()
 
@@ -22,7 +23,8 @@ function Login() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/api/login", {
+            console.log(values)
+            fetch("/api/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,24 +32,21 @@ function Login() {
                 body: JSON.stringify(values, null, 2),
             })
             .then((r) => {
-                if (r.status === 200) {
-                    r.json().then((data) => {
-                        setUser(data)
+                if (r.status === 201) {
+                    r.json()
+                    .then((data) => {
+                        setUser(data),
                         navigate(`/user/${data.id}`)
                     })
                 } else {
-                    alert('Incorrect username or password')
-            }})
+                    alert('Could not signup user')
+                }})
         }
     })
-        
-
-
+    
     return (
         <div>
-            <NavLink to='/signup' className='nav-link'>Signup</NavLink>
-            <h2>Welcome to StudyBuddies!</h2>
-            <h3>Please Login to Get Studying</h3>
+            <h3>Sign Up Now!</h3>
             <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
                 <label htmlFor='username'>Username</label>
                 <br />
@@ -92,4 +91,5 @@ function Login() {
     )
 }
 
-export default Login
+
+export default Signup

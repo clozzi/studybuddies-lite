@@ -5,6 +5,8 @@ from models import Teacher, Student, Group, Message, student_groups
 from sqlalchemy_serializer import SerializerMixin
 from flask_socketio import emit, join_room, leave_room, send
 from sqlalchemy.exc import IntegrityError
+from random import randint, choice as rc
+
 
 
 class Home(Resource, SerializerMixin):
@@ -12,6 +14,54 @@ class Home(Resource, SerializerMixin):
         return {'message':'Project Server'}
     
 api.add_resource(Home, '/')
+
+# for testing purposes only
+class Signup(Resource, SerializerMixin):
+
+    def post(self):
+        
+        form_data = request.get_json()
+        username = form_data.get('username')
+        password = form_data.get('password')
+        role = form_data.get('role')
+
+        try:
+            if role == 'teacher':
+                teacher = Teacher.query.filter(Teacher.username == username).first()
+                if teacher:
+                    return {'error': 'Already signed up'}
+                else:
+                    new_teacher = Teacher(
+                        username=username
+                    )
+                    new_teacher.password_hash = password
+                    # students = Student.query.all()
+                    # new_teacher.students.extend(students)
+                    db.session.add(new_teacher)
+                    db.session.commit()
+                    session['teacher_id'] = new_teacher.id
+                    return new_teacher.to_dict(), 201
+            if role == 'student':
+                student = Student.query.filter(Student.username == username).first()
+                if student:
+                    return {'error': 'Already signed up'}
+                else:
+                    teacher = Teacher.query.filter_by(username='Christopher').first()
+                    new_student = Student(
+                        username=username,
+                        teacher_id=teacher.id
+                    )
+                    new_student.password_hash = password
+                    # new_student.teacher.extend(teacher)
+                    db.session.add(new_student)
+                    db.session.commit()
+                    session['student_id'] = new_student.id
+                    return new_student.to_dict(), 201
+        
+        except IntegrityError:
+            return {'error': 'Could not create user'}, 422
+api.add_resource(Signup, '/api/signup')
+#  remove signup after testing
 
 class Login(Resource, SerializerMixin):
     def post(self):
@@ -22,7 +72,8 @@ class Login(Resource, SerializerMixin):
         if role == 'teacher':
             teacher = Teacher.query.filter(Teacher.username == username).first()
             if teacher:
-                if teacher.password == password:
+                is_authenticated = teacher.authenticate(password)
+                if is_authenticated:
                     session['teacher_id'] = teacher.id
                     return teacher.to_dict(), 200
                 else:
@@ -32,7 +83,8 @@ class Login(Resource, SerializerMixin):
         if role == 'student':
             student = Student.query.filter(Student.username == username).first()
             if student:
-                if student.password == password:
+                is_authenticated = student.authenticate(password)
+                if is_authenticated:
                     session['student_id'] = student.id
                     return student.to_dict(), 200
                 else:
