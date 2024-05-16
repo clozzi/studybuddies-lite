@@ -180,7 +180,7 @@ function Group() {
                                 onChange={(e) => {setUserInput(e.target.value)}}>
                             </input>
                             <button onClick={sendMessage}>Send</button>
-                            <button onClick={disconnectWS}>Disconnect</button>
+                            <button onClick={disconnectWS} style={{color: '#e60000'}}>Disconnect</button>
                         </div>
                     ) : (
                         <button onClick={connectWS}>Activate Chat</button>

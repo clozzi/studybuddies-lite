@@ -20,7 +20,7 @@ function Home() {
             <div className="user-home">
                 <h2>{user.username}'s Home Page</h2>
                 {user.students ? (
-                    <NavLink to='/groups/new' className='nav-link'>Create New Group </NavLink>
+                    <NavLink to='/groups/new' className='nav-link'>Create New Group</NavLink>
                 ) : (
                     null
                 )}

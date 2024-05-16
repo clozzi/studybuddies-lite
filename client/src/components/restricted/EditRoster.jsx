@@ -68,10 +68,14 @@ function EditRoster() {
         {user ? (
             <div>
                 {group ? (
-                    <div>
+                    <div className="roster">
                         <h2>Group {group.title}</h2>
                         <p>Focus: {group.description}</p>
+                        <br />
                         <NavLink to={`/groups/${group.id}`} className="nav-link">Visit Group</NavLink>
+                        <br />
+                        <br />
+                        <br />
                         <form onSubmit={handleAddStudent}>
                             <label>Add Student to Group: </label>
                             <select name="students" id="students" onChange={(e) => setStudentId(e.target.value)}>
@@ -90,8 +94,8 @@ function EditRoster() {
                         <ul>
                             {group.students.map((student) => (
                                 <div className="group-students" key={student.id}>
-                                    <p>Student: {student.username}</p>
-                                    <button onClick={() => handleRemoveStudent(student.id)}>Remove from Group</button>
+                                    <p><b>Student</b>: {student.username}</p>
+                                    <button onClick={() => handleRemoveStudent(student.id)} style={{color: '#e60000'}}>Remove from Group</button>
                                 </div>
                             ))}
                         </ul> 

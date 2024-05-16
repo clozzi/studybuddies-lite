@@ -9,8 +9,8 @@ function NavBar() {
         <div>
             {user ? (
                 <nav id="navbar">
-                <NavLink to={`/user/${user.id}`} className='nav-link'>Home</NavLink>
-                <button onClick={logout}>Logout</button>
+                <NavLink to={`/user/${user.id}`} className='nav-link' >Home</NavLink>
+                <button onClick={logout} style={{color: '#e60000'}}>Logout</button>
                 </nav>
             ) : (
                 null
