@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import EditGroup from "../restricted/EditGroup";
+import { unstable_usePrompt } from "react-router-dom";
 
 var socket = io('http://localhost:5555', { autoConnect: false });
 
@@ -47,6 +48,13 @@ function Group() {
     //       disconnectWS();
     //     }
     //   };
+    // Uncaught Error: useBlocker must be used within a data router
+    // unstable_usePrompt({
+    //     disconnectWS,
+    //     message: "Please disconnect before leaving",
+    //     when: ({currentLocation, nextLocation}) =>
+    //         isOpen === true && currentLocation.pathname !== nextLocation.pathname,
+    // })
 
     function connectWS() {
         socket.connect()
@@ -117,7 +125,7 @@ function Group() {
                     ) : (
                         <>
                         <h2>Group: {group.title}</h2>
-                        <p>Focus: {group.description}</p>
+                        <p><b>Focus</b>: {group.description}</p>
                         </>
                     )}
                     {user ? (
