@@ -11,6 +11,7 @@ function Login() {
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter username").max(20),
         password: yup.string().required("Password required"),
+        role: yup.string().oneOf(["teacher", "student"]).required("Must select role")
     })
 
     const formik = useFormik({
@@ -82,6 +83,7 @@ function Login() {
                         value="student"
                         onChange={formik.handleChange}
                     />
+                <p style={{ color: "red" }}>{formik.errors.role}</p>
                 <button type="submit">Submit</button>
             </form>
         </div>
