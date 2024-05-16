@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 
 function EditGroup({ id, title, description, onUpdateGroup}) {
-    
+
     const formik = useFormik({
         initialValues: {
             title: title,
@@ -27,6 +27,7 @@ function EditGroup({ id, title, description, onUpdateGroup}) {
         })}
     })
 
+    
     return (
         <div className="edit-group">
             <form onSubmit={formik.handleSubmit}>

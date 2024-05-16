@@ -8,7 +8,7 @@ var socket = io('http://localhost:5555', { autoConnect: false });
 
 function Group() {
     const { id } = useParams()
-    const location = useLocation()
+    // const location = useLocation()
     const { user, updateUserGroups } = useContext(UserContext)
     const [userInput, setUserInput] = useState("")
     const [isOpen, setIsOpen] = useState(false)

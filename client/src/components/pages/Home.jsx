@@ -1,9 +1,10 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { NavLink } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 
 function Home() {
     const { user, handleDeleteGroup } = useContext(UserContext)
+
 
     function deleteGroup(id) {
         handleDeleteGroup(id)
@@ -12,6 +13,7 @@ function Home() {
         })
     }
     
+
     return (
         <>
         {user ? (
