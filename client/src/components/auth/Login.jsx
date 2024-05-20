@@ -44,7 +44,6 @@ function Login() {
 
     return (
         <div className="login-page">
-            <NavLink to='/signup' className='signup-link'>Signup</NavLink>
             <h2>Welcome to StudyBuddies!</h2>
             <h3>Please Login to Get Studying</h3>
             <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
@@ -87,6 +86,8 @@ function Login() {
                 <p style={{ color: "red" }}>{formik.errors.role}</p>
                 <button type="submit">Submit</button>
             </form>
+            
+            <NavLink to='/signup' className='nav-link'>New to StudyBuddies? Click Here to Signup</NavLink>
         </div>
     )
 }

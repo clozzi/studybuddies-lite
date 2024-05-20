@@ -7,10 +7,6 @@ body {
   /* font-family: serif; */
 }
 
-/* h2 {
-  padding: 15px;
-} */
-
 .nav-bar {
   background-color: #b0adad;
   border-radius: 12px;
@@ -52,8 +48,8 @@ button:hover {
   display: inline-block;
   color: black;
   background-color: #d1e0e0;
-  font-size: medium;
-  padding: 15px;
+  font-size: small;
+  padding: 10px;
   border: 1px solid black;
   border-radius: 12px;
   cursor: pointer;
@@ -120,6 +116,42 @@ button:hover {
   scroll-padding: 0 0 100%;
   scroll-snap-align: end;
   scroll-snap-type: y mandatory;
+}
+
+.old-messages {
+  width: 57%;
+}
+
+.old-messages p {
+  background: #efefef none repeat scroll 0 0;
+  border-radius: 10px;
+  color: #646464;
+  font-size: 14px;
+  /* margin-left: 1rem; */
+  padding: 1rem;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 25%) 0px 5px 5px 2px;
+}
+  p {
+  overflow-wrap: break-word;
+}
+
+.new-messages p {
+  background-color: #009900;
+  /* background-color: #3a12ff; */
+  /* background-image: linear-gradient(45deg, #ee087f 0%, #DD2A7B 25%, #9858ac 50%, #8134AF 75%, #515BD4 100%); */
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #fff;
+  padding: 5px 10px 5px 12px;
+  padding: 1rem;
+  box-shadow: rgb(0 0 0 / 25%) 0px 2px 5px 2px;
+}
+
+.new-messages {
+      float: right;
+      width: 46%;
 }
 
 .active-users-sidebar {
@@ -217,41 +249,6 @@ input:focus {
   border-color: lightgray;
   box-shadow: none !important;
 }
-
-.old-messages {
-  width: 57%;
-}
-
-.old-messages p {
-  background: #efefef none repeat scroll 0 0;
-  border-radius: 10px;
-  color: #646464;
-  font-size: 14px;
-  /* margin-left: 1rem; */
-  padding: 1rem;
-  width: 100%;
-  box-shadow: rgb(0 0 0 / 25%) 0px 5px 5px 2px;
-}
-  p {
-  overflow-wrap: break-word;
-}
-
-.new-messages p {
-  background-color: #009900;
-  /* background-color: #3a12ff; */
-  /* background-image: linear-gradient(45deg, #ee087f 0%, #DD2A7B 25%, #9858ac 50%, #8134AF 75%, #515BD4 100%); */
-  color: #fff;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #fff;
-  padding: 5px 10px 5px 12px;
-  padding: 1rem;
-  box-shadow: rgb(0 0 0 / 25%) 0px 2px 5px 2px;
-}
-.new-messages {
-      float: right;
-      width: 46%;
-  }
 
 .roster-form {
   margin: 20px;

@@ -28,12 +28,11 @@ function Group() {
     }, [id, isEditing])
 
     
-    // START MSG BOX SCROLLED TO BOTTOM
-
-    // setTimeout(() => {
-    //     const msgBox = document.getElementById("messages")
-    //     msgBox.scrollTop = msgBox.scrollHeight
-    // }, 1000)
+    // MSG BOX SCROLLED TO BOTTOM
+    setTimeout(() => {
+        const msgBox = document.getElementById('messages')
+        msgBox.scrollTop = msgBox.scrollHeight
+    }, 100)
     
 
     function connectWS() {
@@ -138,8 +137,8 @@ function Group() {
                             <p>No One Yet!</p>
                         )}
                     </div>
-                    <div className="messages">
-                        <div className="old-messages">
+                    <div className="messages" id="messages">
+                        <div className="old-messages" id="old-messages">
                             {group.messages.map((msg) => {
                                 if (msg.teacher) {
                                     return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
