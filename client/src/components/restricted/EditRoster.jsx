@@ -3,11 +3,13 @@ import { NavLink, useParams } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 
 // ADD CSS TO PAGE
+// FETCH ALL STUDENTS? FORGET ADDING RELATIONSHIP
 function EditRoster() {
     const { id } = useParams()
     const { user } = useContext(UserContext)
     const [studentId, setStudentId] = useState('')
     const [group, setGroup] = useState(null)
+    
 
     useEffect(() => {
         fetch(`/api/groups/${id}`)
@@ -68,15 +70,11 @@ function EditRoster() {
             <div>
                 {group ? (
                     <div className="roster">
-                        <div className="group-data">
+                        <div className="group-details">
                             <h2>Group {group.title}</h2>
                             <p>Focus: {group.description}</p>
-                        <br />
-                            <NavLink to={`/groups/${group.id}`} className="nav-link">Visit Group</NavLink>
+                            <NavLink to={`/groups/${group.id}`} className="visit-link">Visit Group</NavLink>
                         </div>
-                        <br />
-                        <br />
-                        <br />
                         <div className="roster-form">
                             <form onSubmit={handleAddStudent}>
                                 <label>Add Student to Group: </label>
@@ -93,14 +91,14 @@ function EditRoster() {
                                 <button type="submit">Click to Add</button>
                             </form>
                         </div>
-                        <ul>
+                        <div className="group-students">
                             {group.students.map((student) => (
-                                <div className="group-students" key={student.id}>
+                                <div className="group-student" key={student.id}>
                                     <p><b>Student</b>: {student.username}</p>
                                     <button onClick={() => handleRemoveStudent(student.id)} style={{color: '#e60000'}}>Remove from Group</button>
                                 </div>
                             ))}
-                        </ul> 
+                        </div> 
                     </div>
                 ) : (
                     <h2>Loading...</h2>

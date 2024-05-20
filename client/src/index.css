@@ -49,6 +49,7 @@ button:hover {
 }
 
 .signup-link {
+  display: inline-block;
   color: black;
   background-color: #d1e0e0;
   font-size: medium;
@@ -58,7 +59,6 @@ button:hover {
   cursor: pointer;
   transition-duration: 0.4s;
   text-decoration: none;
-  /* margin: 15px; */
 }
 
 .nav-link:hover {
@@ -153,7 +153,7 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 20px;
   height: auto;
-  background-color: #646464;
+  background-color: #b0adad;
 }
 
 .input-group {
@@ -252,3 +252,26 @@ input:focus {
       float: right;
       width: 46%;
   }
+
+.roster-form {
+  margin: 20px;
+}
+
+.group-students {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+
+.visit-link {
+  color: black;
+  background-color: #d1e0e0;
+  font-size: small;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  text-decoration: none;
+}

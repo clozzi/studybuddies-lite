@@ -20,7 +20,7 @@ function NavBar() {
                 <button onClick={logout} style={{color: '#e60000'}}>Logout</button>
                 </nav>
             ) : (
-                null
+                <h1 >StudyBuddies: The Real Time Chat App for Students</h1>
             )}
         </div>
     )
