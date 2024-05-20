@@ -60,7 +60,7 @@ function Group() {
                 console.log(currentRoom)
                 // console.log(currentRoomUsers)
                 // WHY IS THIS NOT WORKING
-                // setActiveUsers([currentRoom.users])
+                // setActiveUsers(currentRoom.users)
             })
         })
     }, [])
@@ -152,9 +152,6 @@ function Group() {
                         <hr />
                         <p>Live Messages</p>
                         <div className="new-messages">
-                            {/* {currentMessages.map((msg, index) => (
-                                <p key={index}>{msg}</p>
-                            ))} */}
                             {currentMessages.map((msg, index) => {
                                 if (msg.username == user.username) {
                                     return <p key={index} style={{ backgroundColor: "green"}}><b>{msg.username}</b>: {msg.message}</p>
@@ -170,7 +167,6 @@ function Group() {
                 <div className="msg-bottom">
                 {isOpen ? (
                         <div className="input-group">
-                            {/* <label>Type Message Here: </label> */}
                             <input type='text' 
                                 value={userInput} 
                                 className="form-control"
