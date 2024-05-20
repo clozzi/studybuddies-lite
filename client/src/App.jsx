@@ -15,7 +15,6 @@ function App() {
     <>
     <UserProvider>
       <NavBar />
-      <h1>StudyBuddies: The Real Time Chat App for Students</h1>
       <Routes>
         <Route path="/" element={<Login />} errorElement={<ErrorPage />}/>
         <Route path="/signup" element={<Signup />} />

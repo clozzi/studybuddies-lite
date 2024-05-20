@@ -43,8 +43,8 @@ function Login() {
 
 
     return (
-        <div>
-            <NavLink to='/signup' className='nav-link'>Signup</NavLink>
+        <div className="login-page">
+            <NavLink to='/signup' className='signup-link'>Signup</NavLink>
             <h2>Welcome to StudyBuddies!</h2>
             <h3>Please Login to Get Studying</h3>
             <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>

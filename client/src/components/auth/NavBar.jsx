@@ -12,9 +12,10 @@ function NavBar() {
     }
 
     return (
-        <div>
+        <div className="nav-bar">
             {user ? (
-                <nav id="navbar">
+                <nav>
+                <h1 >StudyBuddies: The Real Time Chat App for Students</h1>
                 <NavLink to={`/user/${user.id}`} className='nav-link' onClick={handleBadDisconnect} >Home</NavLink>
                 <button onClick={logout} style={{color: '#e60000'}}>Logout</button>
                 </nav>
