@@ -7,10 +7,13 @@ function Home() {
 
 
     function deleteGroup(id) {
-        handleDeleteGroup(id)
-        fetch(`/api/groups/${id}`, {
-            method: "DELETE"
-        })
+        if (confirm("Are you REALLY sure you want to delete this group?") == true) {
+            handleDeleteGroup(id)
+            fetch(`/api/groups/${id}`, {
+                method: "DELETE"
+            })
+        }
+        
     }
     
 

@@ -1,16 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import EditGroup from "../restricted/EditGroup";
-import { unstable_usePrompt } from "react-router-dom";
 
-var socket = io('http://localhost:5555', { autoConnect: false });
+// var socket = io('http://localhost:5555', { autoConnect: false });
 
 
 function Group() {
     const { id } = useParams()
-    // const location = useLocation()
-    const { user, updateUserGroups } = useContext(UserContext)
+    const { socket, user, updateUserGroups } = useContext(UserContext)
     const [userInput, setUserInput] = useState("")
     const [isOpen, setIsOpen] = useState(false)
     const [activeUsers, setActiveUsers] = useState([])
@@ -29,32 +27,14 @@ function Group() {
         })
     }, [id, isEditing])
 
+    
     // START MSG BOX SCROLLED TO BOTTOM
-    // useEffect(() => {
-        // let msgBox = document.querySelector(".messages")
-        // msgBox.scrollTop = msgBox.scrollHeight
-        // msgBox.scrollIntoView({behavior:"smooth", block: "end"})
-        // console.log(msgBox)
-    // }, [group])
 
-    // TRYING TO DISCONNECT ON ROUTE CHANGE
-    // useEffect(() => {
-        // console.log(location.pathname)
-        // socket.emit('special_disconnect', user.username)
-    // }, [location])
-    // window.addEventListener('beforeunload', disconnectWS)
-    // document.onvisibilitychange = function() {
-    //     if (document.visibilityState === 'hidden') {
-    //       disconnectWS();
-    //     }
-    //   };
-    // Uncaught Error: useBlocker must be used within a data router
-    // unstable_usePrompt({
-    //     disconnectWS,
-    //     message: "Please disconnect before leaving",
-    //     when: ({currentLocation, nextLocation}) =>
-    //         isOpen === true && currentLocation.pathname !== nextLocation.pathname,
-    // })
+    // setTimeout(() => {
+    //     const msgBox = document.getElementById("messages")
+    //     msgBox.scrollTop = msgBox.scrollHeight
+    // }, 1000)
+    
 
     function connectWS() {
         socket.connect()
@@ -71,15 +51,18 @@ function Group() {
                 setActiveUsers(data.users)
             })
             socket.on('new_message', (data) => {
+                // console.log(data)
                 setCurrentMessages(prevMessages => [...prevMessages, data])
             })
-            // NEED THE DISCONNECT ON PAGE CHANGE
-            // SEND FULL ACTIVE USER LIST EVERY TIME AND UPDATE WITH FILTER?
-            // socket.on('user_bad', (data) => {
-            //     let userRoom = data.filter(room => room.room_id !== id)
-            //     console.log(userRoom)
-            //     setActiveUsers(userRoom.users)
-            // })
+            socket.on('bad_disconnect', (data) => {
+                console.log(data)
+                const currentRoom = data.filter(data => data.room_id == id)
+                // const currentRoomUsers = currentRoom.users.map(currentUser => currentUser)
+                console.log(currentRoom)
+                // console.log(currentRoomUsers)
+                // WHY IS THIS NOT WORKING
+                // setActiveUsers([currentRoom.users])
+            })
         })
     }, [])
 
@@ -87,6 +70,7 @@ function Group() {
         socket.emit('leave_room', {room:id, username:user.username})
         socket.disconnect()
         setIsOpen(false)
+        setActiveUsers(["You're Disconnected!"])
     }
 
     function sendMessage() {
@@ -144,16 +128,18 @@ function Group() {
                 </div>
                 <div className="message-box">
                     <div className="active-users-sidebar">
+                        <p>Active Users</p>
+                        <hr/>
                         {activeUsers.length ? (
                                 activeUsers.map((activeUser, index) => (
                                     <p key={index}>{activeUser}</p>
-                                ))
-                            ) : (
-                                <p>No One Yet!</p>
+                                    ))
+                        ) : (
+                            <p>No One Yet!</p>
                         )}
                     </div>
                     <div className="messages">
-                        {/* <div className="old-messages"> */}
+                        <div className="old-messages">
                             {group.messages.map((msg) => {
                                 if (msg.teacher) {
                                     return <p key={msg.id}><b>{msg.teacher.username}</b>: {msg.body}</p>
@@ -163,20 +149,33 @@ function Group() {
                                     return null
                                 }
                             })}
-                        {/* </div> */}
-                        {/* <div className="new-messages"> */}
-                            {currentMessages.map((msg, index) => (
+                        </div>
+                        <hr />
+                        <p>Live Messages</p>
+                        <div className="new-messages">
+                            {/* {currentMessages.map((msg, index) => (
                                 <p key={index}>{msg}</p>
-                            ))}
-                        {/* </div> */}
+                            ))} */}
+                            {currentMessages.map((msg, index) => {
+                                if (msg.username == user.username) {
+                                    return <p key={index} style={{ backgroundColor: "green"}}><b>{msg.username}</b>: {msg.message}</p>
+                                } else if (msg.username != user.username) {
+                                    return <p key={index} style={{ backgroundColor: "blue"}}><b>{msg.username}</b>: {msg.message}</p>
+                                } else {
+                                    return null
+                                }
+                            })}
+                        </div>
                     </div>
                 </div>
-                <div className="message-input">
+                <div className="msg-bottom">
                 {isOpen ? (
-                        <div>
-                            <label>Type Message Here: </label>
+                        <div className="input-group">
+                            {/* <label>Type Message Here: </label> */}
                             <input type='text' 
                                 value={userInput} 
+                                className="form-control"
+                                placeholder="Type message..."
                                 onChange={(e) => {setUserInput(e.target.value)}}>
                             </input>
                             <button onClick={sendMessage}>Send</button>

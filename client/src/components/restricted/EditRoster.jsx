@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react"
-import { NavLink, useNavigate, useParams } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 
-
+// ADD CSS TO PAGE
 function EditRoster() {
     const { id } = useParams()
     const { user } = useContext(UserContext)
     const [studentId, setStudentId] = useState('')
     const [group, setGroup] = useState(null)
-    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`/api/groups/${id}`)
@@ -69,28 +68,31 @@ function EditRoster() {
             <div>
                 {group ? (
                     <div className="roster">
-                        <h2>Group {group.title}</h2>
-                        <p>Focus: {group.description}</p>
+                        <div className="group-data">
+                            <h2>Group {group.title}</h2>
+                            <p>Focus: {group.description}</p>
                         <br />
-                        <NavLink to={`/groups/${group.id}`} className="nav-link">Visit Group</NavLink>
+                            <NavLink to={`/groups/${group.id}`} className="nav-link">Visit Group</NavLink>
+                        </div>
                         <br />
                         <br />
                         <br />
-                        <form onSubmit={handleAddStudent}>
-                            <label>Add Student to Group: </label>
-                            <select name="students" id="students" onChange={(e) => setStudentId(e.target.value)}>
-                                <option value="">Choose here</option>
-                                {user.students ? (
-                                    user.students.map(student => (
-                                        <option value={student.id} key={student.id}>{student.username}</option>
-                                    ))
-                                ):(
-                                    null
-                                )}
-                            </select>
-                            <button type="submit">Click to Add</button>
-                        </form>
-                        
+                        <div className="roster-form">
+                            <form onSubmit={handleAddStudent}>
+                                <label>Add Student to Group: </label>
+                                <select name="students" id="students" onChange={(e) => setStudentId(e.target.value)}>
+                                    <option value="">Choose here</option>
+                                    {user.students ? (
+                                        user.students.map(student => (
+                                            <option value={student.id} key={student.id}>{student.username}</option>
+                                        ))
+                                    ):(
+                                        null
+                                    )}
+                                </select>
+                                <button type="submit">Click to Add</button>
+                            </form>
+                        </div>
                         <ul>
                             {group.students.map((student) => (
                                 <div className="group-students" key={student.id}>

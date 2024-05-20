@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext({})
 
+var socket = io('http://localhost:5555', { autoConnect: false });
+
+
 function UserProvider({ children }) {
     const [user, setUser] = useState(null)
     const navigate = useNavigate()
@@ -54,7 +57,7 @@ function UserProvider({ children }) {
     }
 
 
-    return <UserContext.Provider value={{user, handleCreateGroup, handleDeleteGroup, updateUserGroups, setUser, logout}}>
+    return <UserContext.Provider value={{ socket, user, handleCreateGroup, handleDeleteGroup, updateUserGroups, setUser, logout}}>
             { children }</UserContext.Provider>
 }
 

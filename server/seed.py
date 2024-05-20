@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
         print('Seeding...')
         t1 = Teacher(
-            username='Bob'
+            username='Bob',
             # password='123'
         )
         t2 = Teacher(

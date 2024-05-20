@@ -344,9 +344,22 @@ def handle_leave_room(data):
     emit('user_left', room, to=roomID)
     leave_room(roomID)
 
+@sio.on('bad_leave_room')
+def handle_bad_users(data):
+    username = data['username']
+    for room in active_rooms:
+        if any(user == username for user in room['users']):
+            room['users'] = [user for user in room['users'] if user != username]
+    emit('bad_disconnect', active_rooms, broadcast=True)
+    print(active_rooms)
+
 @sio.on('send_message')
 def handle_send_message(msg):
-    emit('new_message', msg['username'] + ': ' + msg['userInput'], to=msg['room'])
+    username = msg['username']
+    message = msg['userInput']
+    room = msg['room']
+    emit('new_message', {'username': username, 'message': message}, to=room)
+    # emit('new_message', msg['username'] + ': ' + msg['userInput'], to=msg['room'])
 
 @sio.on('disconnect')
 def handle_disconnect():
