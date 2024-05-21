@@ -7,7 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 
+
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -22,8 +24,8 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 api = Api(app)
-db.init_app(app)
 
+db.init_app(app)
 
 CORS(app, resources={r"/*":{"origins":"*"}})
 sio = SocketIO(app, cors_allowed_origins="*")

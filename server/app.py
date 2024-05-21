@@ -1,19 +1,18 @@
 from flask import request, session
 from flask_restful import Resource
 from config import sio, app, api, db
-from models import Teacher, Student, Group, Message, student_groups
+from models import Teacher, Student, Group, Message
 from sqlalchemy_serializer import SerializerMixin
-from flask_socketio import emit, join_room, leave_room, send
+from flask_socketio import emit, join_room, leave_room
 from sqlalchemy.exc import IntegrityError
-from random import randint, choice as rc
-
 
 
 class Home(Resource, SerializerMixin):
     def get(self):
         return {'message':'Project Server'}
-    
 api.add_resource(Home, '/')
+
+
 
 
 # for testing purposes only
@@ -55,7 +54,6 @@ class Signup(Resource, SerializerMixin):
                     db.session.commit()
                     session['student_id'] = new_student.id
                     return new_student.to_dict(), 201
-        
         except IntegrityError:
             return {'error': 'Could not create user'}, 422
         
@@ -63,8 +61,11 @@ api.add_resource(Signup, '/api/signup')
 #  remove signup after testing
 
 
+
 class Login(Resource, SerializerMixin):
+
     def post(self):
+
         username = request.get_json()['username']
         password = request.get_json()['password']
         role = request.get_json()['role']
@@ -79,7 +80,6 @@ class Login(Resource, SerializerMixin):
                 else:
                     return {'error': 'Incorrect Password'}
             return {'error': 'Teacher not found'}, 400
-        
         if role == 'student':
             student = Student.query.filter(Student.username == username).first()
             if student:
@@ -93,8 +93,12 @@ class Login(Resource, SerializerMixin):
         
 api.add_resource(Login, '/api/login')
 
+
+
 class Logout(Resource, SerializerMixin):
+
     def delete(self):
+
         if session.get('teacher_id'):
             del session['teacher_id']
             return {'message': 'Successfully logged out'}, 200
@@ -107,55 +111,67 @@ class Logout(Resource, SerializerMixin):
     
 api.add_resource(Logout, '/api/logout')
 
+
+
 class CheckSession(Resource, SerializerMixin):
+
     def get(self):
+
         teacher_id = session.get('teacher_id')
         student_id = session.get('student_id')
+
         if teacher_id:
             teacher = Teacher.query.filter_by(id=teacher_id).first()
             return teacher.to_dict(), 200
         if student_id:
             student = Student.query.filter_by(id=student_id).first()
             return student.to_dict(), 200
+        
         return {}, 204
     
 api.add_resource(CheckSession, '/api/check_session')
 
 
 
+
 class Teachers(Resource, SerializerMixin):
     def get(self):
         return [teacher.to_dict() for teacher in Teacher.query.all()]
-    
 api.add_resource(Teachers, '/api/teachers')
+
+
 
 class TeachersById(Resource, SerializerMixin):
     def get(self, id):
         teacher = Teacher.query.filter_by(id=id).first()
         return teacher.to_dict()
-    
 api.add_resource(TeachersById, '/api/teachers/<int:id>')
+
 
 
 class Students(Resource, SerializerMixin):
     def get(self):
         return [student.to_dict() for student in Student.query.all()]
-    
 api.add_resource(Students, '/api/students')
+
+
 
 class StudentsById(Resource, SerializerMixin):
     def get(self, id):
         student = Student.query.filter_by(id=id).first()
         return student.to_dict()
-    
 api.add_resource(StudentsById, '/api/students/<int:id>')
 
 
+
 class Groups(Resource, SerializerMixin):
+
     def get(self):
         return [group.to_dict() for group in Group.query.all()]
     
+    
     def post(self):
+
         if not session['teacher_id']:
             return {'error': 'Unauthorized'}, 401
         
@@ -169,6 +185,7 @@ class Groups(Resource, SerializerMixin):
             description=description,
             teacher_id=teacher_id
         )
+
         try:
             db.session.add(new_group)
             db.session.commit()
@@ -178,12 +195,17 @@ class Groups(Resource, SerializerMixin):
         
 api.add_resource(Groups, '/api/groups')
 
+
+
 class GroupsById(Resource, SerializerMixin):
+
     def get(self, id):
         group = Group.query.filter_by(id=id).first()
         return group.to_dict()
     
+    
     def patch(self, id):
+
         if not session['teacher_id']:
             return {'error': 'Unauthorized'}
         
@@ -198,9 +220,12 @@ class GroupsById(Resource, SerializerMixin):
             db.session.commit()
 
             return group.to_dict(), 200
+        
         return {'error': '404 Resource not found'}, 404
     
+
     def delete(self, id):
+
         if not session['teacher_id']:
             return {'error': 'Unauthorized'}
         
@@ -210,7 +235,6 @@ class GroupsById(Resource, SerializerMixin):
             try:
                 db.session.delete(group)
                 db.session.commit()
-
                 return {'message': 'Group deleted'}, 200
             except:
                 return {'error': 'Unable to delete'}
@@ -219,8 +243,11 @@ class GroupsById(Resource, SerializerMixin):
 api.add_resource(GroupsById, '/api/groups/<int:id>')
 
 
+
 class StudentsGroups(Resource, SerializerMixin):
+
     def post(self):
+
         if not session['teacher_id']:
             return {'error': 'Unauthorized'}, 401
         
@@ -240,7 +267,9 @@ class StudentsGroups(Resource, SerializerMixin):
         except IntegrityError:
             return {'error': 'could not enroll student'}, 422
         
+
     def delete(self):
+
         if not session['teacher_id']:
             return {'error': 'Unauthorized'}, 401
         
@@ -263,15 +292,19 @@ class StudentsGroups(Resource, SerializerMixin):
 api.add_resource(StudentsGroups, '/api/students_groups')
 
 
+
 class Messages(Resource, SerializerMixin):
+
     def get(self):
         return [message.to_dict() for message in Message.query.all()]
     
+
     def post(self):
         
         request_json = request.get_json()
         body = request_json.get('body')
         group_id = request_json.get('group_id')
+
         try:
             if session.get('teacher_id'):
                 new_message = Message(
@@ -296,11 +329,12 @@ class Messages(Resource, SerializerMixin):
         
 api.add_resource(Messages, '/api/messages')
 
+
+
 class MessagesById(Resource, SerializerMixin):
     def get(self, id):
         message = Message.query.filter_by(id=id).first()
         return message.to_dict()
-    
 api.add_resource(MessagesById, '/api/messages/<int:id>')
 
 
@@ -311,6 +345,7 @@ active_rooms = []
 @sio.on('connect')
 def handle_connect():
     print('WS server connected')
+
 
 @sio.on('enter_room')
 def handle_enter_room(data):
@@ -328,14 +363,12 @@ def handle_enter_room(data):
     join_room(roomID)
     emit('user_joined', room, to=roomID)
 
+
 @sio.on('leave_room')
 def handle_leave_room(data):
     username = data['username']
     roomID = data['room']
     global active_rooms
-    # for room in active_rooms:
-    #     if any(user == username for user in room['users']):
-    #         room['users'] = [user for user in room['users'] if user != username]
     room = next((room for room in active_rooms if room['room_id'] == roomID), None)
     if room is None:
         print('no room detected')
@@ -343,6 +376,7 @@ def handle_leave_room(data):
         room['users'].remove(username)
     emit('user_left', room, to=roomID)
     leave_room(roomID)
+
 
 @sio.on('bad_leave_room')
 def handle_bad_users(data):
@@ -353,6 +387,7 @@ def handle_bad_users(data):
     emit('bad_disconnect', active_rooms, broadcast=True)
     print(active_rooms)
 
+
 @sio.on('send_message')
 def handle_send_message(msg):
     username = msg['username']
@@ -361,18 +396,13 @@ def handle_send_message(msg):
     emit('new_message', {'username': username, 'message': message}, to=room)
     # emit('new_message', msg['username'] + ': ' + msg['userInput'], to=msg['room'])
 
+
 @sio.on('disconnect')
 def handle_disconnect():
     print('WS server disconnected')
 
-# @sio.on('special_disconnect')
-# def handle_bad_user(username):
-#     global active_rooms
-#     for room in active_rooms:
-#         if any(user == username for user in room['users']):
-#             room['users'] = [user for user in room['users'] if user != username]
-#     print(active_rooms)
-#     emit('user_bad', active_rooms, broadcast=True)
+
+
 
 
 if __name__ == '__main__':

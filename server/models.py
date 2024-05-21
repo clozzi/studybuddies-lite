@@ -2,11 +2,13 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
+
 student_groups = db.Table(
     'students_groups',
     db.Column('student_id', db.Integer, db.ForeignKey('students.id'), primary_key=True),
     db.Column('group_id', db.Integer, db.ForeignKey('groups.id'), primary_key=True),
 )
+
 
 class Teacher(db.Model, SerializerMixin):
     __tablename__ = 'teachers'
@@ -37,6 +39,7 @@ class Teacher(db.Model, SerializerMixin):
     def __repr__(self):
         return f'Teacher {self.id}: {self.username}'
     
+
 class Student(db.Model, SerializerMixin):
     __tablename__ = 'students'
 
@@ -69,6 +72,7 @@ class Student(db.Model, SerializerMixin):
     def __repr__(self):
         return f'Student {self.id}: {self.username}'
     
+
 class Group(db.Model, SerializerMixin):
     __tablename__ = 'groups'
 
@@ -88,6 +92,7 @@ class Group(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'Group {self.id}: {self.title}'
+
 
 class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'
