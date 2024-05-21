@@ -174,7 +174,7 @@ input {
 
 button {
   background-color: #fff;
-  border: 1px solid black;
+  border: 1px solid #3290B1;
   border-radius: 1.5rem;
   box-sizing: border-box;
   color: #0d172a;
@@ -210,7 +210,7 @@ button:hover {
 
 .danger-btn {
   background-color: #fff;
-  border: 1px solid black;
+  border: 1px solid #3290B1;
   border-radius: 1.5rem;
   box-sizing: border-box;
   color: #0d172a;
@@ -246,7 +246,7 @@ button:hover {
 
 .nav-link {
   background-color: #fff;
-  border: 1px solid black;
+  border: 1px solid #3290B1;
   border-radius: 1.5rem;
   box-sizing: border-box;
   color: #0d172a;
@@ -282,7 +282,8 @@ button:hover {
 
 .nav-bar {
   justify-content: center;
-  background-color: #b0adad;
+  background-color: #3290B1;
+  color: #EEEEEE;
   border-radius: 12px;
   padding: 10px;
   border: inset;
@@ -302,12 +303,12 @@ button:hover {
 
 .user-group {
   border: outset;
-  border-color: #868ac2;
+  border-color: #3290B1;
   display: flex;
   flex-direction: column;
   /* border-color: #3842cf; */
   padding: 15px;
-  background-color: #c2c3d1;
+  background-color: #ffcc80;
 }
 
 .group-details {
@@ -366,10 +367,9 @@ button:hover {
   background-color: #009900;
   /* background-color: #3a12ff; */
   /* background-image: linear-gradient(45deg, #ee087f 0%, #DD2A7B 25%, #9858ac 50%, #8134AF 75%, #515BD4 100%); */
-  color: #fff;
+  color: #646464;
   border-radius: 10px;
   font-size: 14px;
-  color: #fff;
   padding: 5px 10px 5px 12px;
   padding: 1rem;
   box-shadow: rgb(0 0 0 / 25%) 0px 2px 5px 2px;
@@ -388,8 +388,9 @@ button:hover {
 }
 
 .active-users-sidebar p {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(24,214,78,1) 44%, rgba(0,212,255,1) 100%);
+  /* background: rgb(2,0,36); */
+  /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(24,214,78,1) 44%, rgba(0,212,255,1) 100%); */
+  background-color: #3290B1;
   color: #fff;
   border-radius: 10px;
   font-size: 14px;

@@ -21,7 +21,7 @@ function NavBar() {
                     </div>
                 <h1>StudyBuddies</h1>
                 <h3>The Real Time Chat App for Students</h3>
-                <NavLink to={`/user/${user.id}`} className='nav-link' onClick={handleBadDisconnect} >Home</NavLink>
+                <NavLink to={`/user/${user.id}`} className='nav-link' onClick={handleBadDisconnect} style={{ fontSize: "small", padding: "10px 20px"}}>Home</NavLink>
                 </nav>
             ) : (
                 <nav>
