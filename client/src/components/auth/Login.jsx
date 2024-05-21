@@ -45,9 +45,9 @@ function Login() {
 
     return (
         <div className="login-page">
-            <h2>Welcome to StudyBuddies!</h2>
-            <h3>Please Login to Get Studying</h3>
-            <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
+            <h2 className="login-title">Welcome to StudyBuddies!</h2>
+            <h3 className="login-title">Please Login to Get Studying</h3>
+            <form onSubmit={formik.handleSubmit} className="login-form">
                 <label htmlFor='username'>Username</label>
                 <br />
                 <input
@@ -56,6 +56,7 @@ function Login() {
                     placeholder='Enter Username...'
                     onChange={formik.handleChange}
                     value={formik.values.username}
+                    className="login-input"
                 />
                 <p style={{ color: "red" }}>{formik.errors.username}</p>
                 <label htmlFor='password'>Password</label>
@@ -66,29 +67,34 @@ function Login() {
                     placeholder='Enter Password...'
                     onChange={formik.handleChange}
                     value={formik.values.password}
+                    className="login-input"
                 />
                 <p style={{ color: "red" }}>{formik.errors.password}</p>
-                <label>Teacher </label>
-                     <input 
+                <div className="login-switch">
+                    <input 
                         name="role" 
                         type="radio"
                         id="teacher"
                         value="teacher"
                         onChange={formik.handleChange}
+                        className="login-switch-input"
                     />
-                    <label>Student </label>
+                    <label for="teacher" className="login-switch-label">Teacher</label>
                     <input 
                         name="role" 
                         type="radio"
                         id="student"
                         value="student"
                         onChange={formik.handleChange}
+                        className="login-switch-input"
                     />
-                <p style={{ color: "red" }}>{formik.errors.role}</p>
-                <button type="submit">Submit</button>
+                    <label for="student" className="login-switch-label">Student</label>
+                    <p style={{ color: "red" }}>{formik.errors.role}</p>
+                </div>
+                <button type="submit" className="login-button">Submit</button>
             </form>
             
-            <NavLink to='/signup' className='nav-link'>New to StudyBuddies? Click Here to Signup</NavLink>
+            <NavLink to='/signup' >New? Click Here to Signup</NavLink>
         </div>
     )
 }
