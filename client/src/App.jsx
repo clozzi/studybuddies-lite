@@ -9,7 +9,9 @@ import CreateGroup from "./components/restricted/CreateGroup"
 import EditRoster from "./components/restricted/EditRoster"
 import Signup from "./components/auth/Signup"
 
+
 function App() {
+
 
   return (
     <>
@@ -28,5 +30,6 @@ function App() {
     </>
   )
 }
+
 
 export default App

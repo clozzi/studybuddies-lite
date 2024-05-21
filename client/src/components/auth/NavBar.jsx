@@ -11,6 +11,7 @@ function NavBar() {
         console.log('fired')
     }
 
+    
     return (
         <div className="nav-bar">
             {user ? (
@@ -25,5 +26,6 @@ function NavBar() {
         </div>
     )
 }
+
 
 export default NavBar

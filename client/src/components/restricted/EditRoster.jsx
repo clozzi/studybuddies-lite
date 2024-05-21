@@ -9,7 +9,6 @@ function EditRoster() {
     const { user } = useContext(UserContext)
     const [studentId, setStudentId] = useState('')
     const [group, setGroup] = useState(null)
-    
 
     useEffect(() => {
         fetch(`/api/groups/${id}`)
@@ -64,6 +63,8 @@ function EditRoster() {
                 alert('Failed to register student')
         }})
     }
+
+
     return (
         <>
         {user ? (
@@ -106,10 +107,10 @@ function EditRoster() {
             </div>
         ) : (
             <h2>Unauthorized</h2>
-        )}
-            
+        )}  
         </>
     )
 }
+
 
 export default EditRoster

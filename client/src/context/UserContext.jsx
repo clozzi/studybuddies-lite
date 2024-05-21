@@ -10,7 +10,6 @@ function UserProvider({ children }) {
     const [user, setUser] = useState(null)
     const navigate = useNavigate()
 
-
     useEffect(() => {
         fetch("/api/check_session")
             .then((r) => {
@@ -60,5 +59,6 @@ function UserProvider({ children }) {
     return <UserContext.Provider value={{ socket, user, handleCreateGroup, handleDeleteGroup, updateUserGroups, setUser, logout}}>
             { children }</UserContext.Provider>
 }
+
 
 export { UserContext, UserProvider }

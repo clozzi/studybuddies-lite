@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 
-function EditGroup({ id, title, description, onUpdateGroup}) {
 
+function EditGroup({ id, title, description, onUpdateGroup}) {
     const formik = useFormik({
         initialValues: {
             title: title,
@@ -60,5 +60,6 @@ function EditGroup({ id, title, description, onUpdateGroup}) {
         </div>
     )
 }
+
 
 export default EditGroup

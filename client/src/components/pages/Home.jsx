@@ -2,9 +2,9 @@ import { useContext } from "react"
 import { NavLink } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 
+
 function Home() {
     const { user, handleDeleteGroup } = useContext(UserContext)
-
 
     function deleteGroup(id) {
         if (confirm("Are you REALLY sure you want to delete this group?") == true) {
@@ -53,5 +53,6 @@ function Home() {
         </>
     )
 }
+
 
 export default Home

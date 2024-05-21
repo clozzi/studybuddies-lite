@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import EditGroup from "../restricted/EditGroup";
 
-// var socket = io('http://localhost:5555', { autoConnect: false });
-
 
 function Group() {
     const { id } = useParams()
@@ -26,14 +24,11 @@ function Group() {
             }
         })
     }, [id, isEditing])
-
     
-    // MSG BOX SCROLLED TO BOTTOM
     setTimeout(() => {
         const msgBox = document.getElementById('messages')
         msgBox.scrollTop = msgBox.scrollHeight
     }, 100)
-    
 
     function connectWS() {
         socket.connect()
@@ -50,17 +45,12 @@ function Group() {
                 setActiveUsers(data.users)
             })
             socket.on('new_message', (data) => {
-                // console.log(data)
                 setCurrentMessages(prevMessages => [...prevMessages, data])
             })
             socket.on('bad_disconnect', (data) => {
                 console.log(data)
                 const currentRoom = data.filter(data => data.room_id == id)
-                // const currentRoomUsers = currentRoom.users.map(currentUser => currentUser)
-                console.log(currentRoom)
-                // console.log(currentRoomUsers)
-                // WHY IS THIS NOT WORKING
-                // setActiveUsers(currentRoom.users)
+                setActiveUsers(currentRoom[0].users)
             })
         })
     }, [])

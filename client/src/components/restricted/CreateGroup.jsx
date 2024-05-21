@@ -4,10 +4,10 @@ import { useFormik } from "formik"
 import * as yup from 'yup'
 import { useNavigate } from "react-router-dom"
 
+
 function CreateGroup() {
     const { user, handleCreateGroup } = useContext(UserContext)
     const navigate = useNavigate()
-
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must Name Group").max(20),
@@ -81,5 +81,6 @@ function CreateGroup() {
         </>
     )
 }
+
 
 export default CreateGroup

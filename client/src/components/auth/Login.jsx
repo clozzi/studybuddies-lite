@@ -4,6 +4,7 @@ import * as yup from "yup"
 import { useContext } from "react"
 import { UserContext } from "../../context/UserContext"
 
+
 function Login() {
     const { setUser } = useContext(UserContext)
     const navigate = useNavigate()
@@ -91,5 +92,6 @@ function Login() {
         </div>
     )
 }
+
 
 export default Login

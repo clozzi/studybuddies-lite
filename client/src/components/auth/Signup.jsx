@@ -9,7 +9,6 @@ function Signup() {
     const { setUser } = useContext(UserContext)
     const navigate = useNavigate()
 
-    
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter username").max(20),
         password: yup.string().required("Password required"),

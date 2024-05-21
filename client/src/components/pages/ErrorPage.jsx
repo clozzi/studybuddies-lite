@@ -1,10 +1,12 @@
 import { useRouteError } from "react-router-dom";
 import NavBar from "../auth/NavBar";
 
+
 function ErrorPage() {
     const error = useRouteError()
     console.error(error)
 
+    
     return (
         <>
             <header>
@@ -16,5 +18,6 @@ function ErrorPage() {
         </>
     )
 }
+
 
 export default ErrorPage
