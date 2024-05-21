@@ -18,7 +18,7 @@ function NavBar() {
                 <nav>
                 <h1 >StudyBuddies: The Real Time Chat App for Students</h1>
                 <NavLink to={`/user/${user.id}`} className='nav-link' onClick={handleBadDisconnect} >Home</NavLink>
-                <button onClick={logout} style={{color: '#e60000'}}>Logout</button>
+                <button onClick={logout} style={{color: '#870505'}}>Logout</button>
                 </nav>
             ) : (
                 <h1 >StudyBuddies: The Real Time Chat App for Students</h1>
