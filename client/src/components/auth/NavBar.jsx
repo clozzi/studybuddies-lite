@@ -16,12 +16,19 @@ function NavBar() {
         <div className="nav-bar">
             {user ? (
                 <nav>
-                <h1 >StudyBuddies: The Real Time Chat App for Students</h1>
+                    <div style={{ textAlign: "end"}}>
+                        <button onClick={logout} className="danger-btn" style={{ fontSize: "xx-small", padding: "10px"}}>Logout</button>
+                    </div>
+                <h1>StudyBuddies</h1>
+                <h3>The Real Time Chat App for Students</h3>
                 <NavLink to={`/user/${user.id}`} className='nav-link' onClick={handleBadDisconnect} >Home</NavLink>
-                <button onClick={logout} style={{color: '#870505'}}>Logout</button>
                 </nav>
             ) : (
-                <h1 >StudyBuddies: The Real Time Chat App for Students</h1>
+                <nav>
+                <h1>StudyBuddies</h1>
+                <h3>The Real Time Chat App for Students</h3>
+                </nav>
+                
             )}
         </div>
     )

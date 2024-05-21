@@ -103,7 +103,7 @@ function Group() {
                     )}
                     {user ? (
                         user.students ? (
-                            <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
+                            <button onClick={() => setIsEditing((isEditing) => !isEditing)} className="danger-btn">
                                 <span role="img" aria-label="edit">
                                 Edit Group Details ✏️
                                 </span>
@@ -164,7 +164,7 @@ function Group() {
                                 onChange={(e) => {setUserInput(e.target.value)}}>
                             </input>
                             <button onClick={sendMessage}>Send</button>
-                            <button onClick={disconnectWS} style={{color: '#870505'}}>Disconnect</button>
+                            <button onClick={disconnectWS} className="danger-btn">Disconnect</button>
                         </div>
                     ) : (
                         <button onClick={connectWS}>Activate Chat</button>

@@ -38,7 +38,7 @@ function Home() {
                             {user.students ? (
                                 <>
                                 <NavLink to={`/student-groups/${group.id}`} className='nav-link'>Edit Roster</NavLink>
-                                <button onClick={() => deleteGroup(group.id)} >Delete Group</button>
+                                <button onClick={() => deleteGroup(group.id)} className="danger-btn">Delete Group</button>
                                 </>
                             ) : (
                                 null
