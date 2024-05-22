@@ -144,9 +144,9 @@ function Group() {
                         <div className="new-messages">
                             {currentMessages.map((msg, index) => {
                                 if (msg.username == user.username) {
-                                    return <p key={index} style={{ backgroundColor: "#ffcc80"}}><b>{msg.username}</b>: {msg.message}</p>
+                                    return <p key={index} style={{ backgroundColor: "#3290B1", color: "white"}}><b>{msg.username}</b>: {msg.message}</p>
                                 } else if (msg.username != user.username) {
-                                    return <p key={index} style={{ backgroundColor: "#3290B1"}}><b>{msg.username}</b>: {msg.message}</p>
+                                    return <p key={index} style={{ backgroundColor: "#afe0ad"}}><b>{msg.username}</b>: {msg.message}</p>
                                 } else {
                                     return null
                                 }

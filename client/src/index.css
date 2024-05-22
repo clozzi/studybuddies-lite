@@ -233,8 +233,8 @@ button:hover {
 }
 
 .danger-btn:hover {
-  background-color: #1e293b;
-  color: #e31919;
+  background-color: red;
+  color: white;
 }
 
 @media (min-width: 768px) {
@@ -269,8 +269,8 @@ button:hover {
 }
 
 .nav-link:hover {
-  background-color: #1e293b;
-  color: #ccc;
+  background-color: #91918e;
+  color: white;
 }
 
 @media (min-width: 768px) {
@@ -308,7 +308,7 @@ button:hover {
   flex-direction: column;
   /* border-color: #3842cf; */
   padding: 15px;
-  background-color: #ffcc80;
+  background-color: #e6c957;
 }
 
 .group-details {

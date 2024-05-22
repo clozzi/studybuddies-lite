@@ -96,7 +96,7 @@ function EditRoster() {
                             {group.students.map((student) => (
                                 <div className="group-student" key={student.id}>
                                     <p><b>Student</b>: {student.username}</p>
-                                    <button onClick={() => handleRemoveStudent(student.id)} style={{color: '#870505'}}>Remove from Group</button>
+                                    <button onClick={() => handleRemoveStudent(student.id)} className="danger-btn">Remove from Group</button>
                                 </div>
                             ))}
                         </div> 
