@@ -38,21 +38,23 @@ function Group() {
 
     useEffect(() => {
         socket.on('connect', () => {
-            socket.on('user_joined', (data) => {
-                setActiveUsers(data.users)
-            })
-            socket.on('user_left', (data) => {
-                setActiveUsers(data.users)
-            })
-            socket.on('new_message', (data) => {
-                setCurrentMessages(prevMessages => [...prevMessages, data])
-            })
-            socket.on('bad_disconnect', (data) => {
-                const currentRoom = data.filter(data => data.room_id == id)
-                setActiveUsers(currentRoom[0].users)
-            })
+            console.log('connected to server')
+        })
+        socket.on('user_joined', (data) => {
+            setActiveUsers(data.users)
+        })
+        socket.on('user_left', (data) => {
+            setActiveUsers(data.users)
+        })
+        socket.on('new_message', (data) => {
+            setCurrentMessages(prevMessages => [...prevMessages, data])
+        })
+        socket.on('bad_disconnect', (data) => {
+            const currentRoom = data.filter(data => data.room_id == id)
+            setActiveUsers(currentRoom[0].users)
         })
     }, [])
+    
 
     function disconnectWS() {
         socket.emit('leave_room', {room:id, username:user.username})
