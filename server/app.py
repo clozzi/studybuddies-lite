@@ -15,51 +15,6 @@ api.add_resource(Home, '/')
 
 
 
-class Signup(Resource, SerializerMixin):
-
-    def post(self):
-        
-        form_data = request.get_json()
-        username = form_data.get('username')
-        password = form_data.get('password')
-        role = form_data.get('role')
-
-        try:
-            if role == 'teacher':
-                teacher = Teacher.query.filter(Teacher.username == username).first()
-                if teacher:
-                    return {'error': 'Already signed up'}
-                else:
-                    new_teacher = Teacher(
-                        username=username
-                    )
-                    new_teacher.password_hash = password
-                    db.session.add(new_teacher)
-                    db.session.commit()
-                    session['teacher_id'] = new_teacher.id
-                    return new_teacher.to_dict(), 201
-            if role == 'student':
-                student = Student.query.filter(Student.username == username).first()
-                if student:
-                    return {'error': 'Already signed up'}
-                else:
-                    teacher = Teacher.query.filter_by(username='Christopher').first()
-                    new_student = Student(
-                        username=username,
-                        teacher_id=teacher.id
-                    )
-                    new_student.password_hash = password
-                    db.session.add(new_student)
-                    db.session.commit()
-                    session['student_id'] = new_student.id
-                    return new_student.to_dict(), 201
-        except IntegrityError:
-            return {'error': 'Could not create user'}, 422
-        
-api.add_resource(Signup, '/api/signup')
-
-
-
 class Login(Resource, SerializerMixin):
 
     def post(self):

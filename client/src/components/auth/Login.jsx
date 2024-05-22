@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { useContext } from "react"
@@ -93,8 +93,6 @@ function Login() {
                 </div>
                 <button type="submit" className="login-button">Submit</button>
             </form>
-            
-            <NavLink to='/signup' >New? Click Here to Signup</NavLink>
         </div>
     )
 }
