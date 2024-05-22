@@ -339,7 +339,7 @@ button:hover {
   overflow-y: scroll;
   flex-direction: column;
   border: inset;
-  /* width: 80%; */
+  width: 80%;
   scroll-padding: 0 0 100%;
   scroll-snap-align: end;
   scroll-snap-type: y mandatory;

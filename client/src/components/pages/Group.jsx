@@ -24,6 +24,8 @@ function Group() {
             }
         })
     }, [id, isEditing])
+
+    window.onbeforeunload = () => {disconnectWS()}
     
     setTimeout(() => {
         const msgBox = document.getElementById('messages')

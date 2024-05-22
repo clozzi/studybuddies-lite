@@ -8,6 +8,7 @@ function EditRoster() {
     const { user } = useContext(UserContext)
     const [studentId, setStudentId] = useState('')
     const [group, setGroup] = useState(null)
+    const [students, setStudents] = useState(null)
 
     useEffect(() => {
         fetch(`/api/groups/${id}`)
@@ -15,6 +16,13 @@ function EditRoster() {
             if (r.status === 200) {
                 r.json()
                 .then(data => setGroup(data))
+            }
+        })
+        fetch('/api/students')
+        .then(r => {
+            if (r.status === 200) {
+                r.json()
+                .then(data => setStudents(data))
             }
         })
     }, [id])
@@ -80,8 +88,8 @@ function EditRoster() {
                                 <label>Add Student to Group: </label>
                                 <select name="students" id="students" onChange={(e) => setStudentId(e.target.value)}>
                                     <option value="">Choose here</option>
-                                    {user.students ? (
-                                        user.students.map(student => (
+                                    {students ? (
+                                        students.map(student => (
                                             <option value={student.id} key={student.id}>{student.username}</option>
                                         ))
                                     ):(
