@@ -19,7 +19,6 @@ function EditGroup({ id, title, description, onUpdateGroup}) {
                     if (r.status === 200) {
                         r.json().then((data) => {
                             onUpdateGroup(data)
-                            console.log(data)
                         })
                     } else {
                         alert('Failed attempt to update')

@@ -8,7 +8,6 @@ function NavBar() {
     function handleBadDisconnect() {
         socket.emit('bad_leave_room', {username:user.username})
         socket.disconnect()
-        console.log('fired')
     }
 
     

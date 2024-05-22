@@ -7,8 +7,8 @@ StudyBuddies is a chat application for students and teachers. Before I left teac
 ## Installation
 
 ```bash
-npm install
 pipenv install
+npm install
 ```
 
 ## Usage

@@ -23,7 +23,6 @@ function Signup() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            console.log(values)
             fetch("/api/signup", {
                 method: "POST",
                 headers: {

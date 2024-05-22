@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { NavLink, useParams } from "react-router-dom"
 import { UserContext } from "../../context/UserContext"
 
-// ADD CSS TO PAGE
-// FETCH ALL STUDENTS? FORGET ADDING RELATIONSHIP
+
 function EditRoster() {
     const { id } = useParams()
     const { user } = useContext(UserContext)

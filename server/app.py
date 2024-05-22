@@ -385,7 +385,6 @@ def handle_bad_users(data):
         if any(user == username for user in room['users']):
             room['users'] = [user for user in room['users'] if user != username]
     emit('bad_disconnect', active_rooms, broadcast=True)
-    print(active_rooms)
 
 
 @sio.on('send_message')
@@ -394,7 +393,6 @@ def handle_send_message(msg):
     message = msg['userInput']
     room = msg['room']
     emit('new_message', {'username': username, 'message': message}, to=room)
-    # emit('new_message', msg['username'] + ': ' + msg['userInput'], to=msg['room'])
 
 
 @sio.on('disconnect')

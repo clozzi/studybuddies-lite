@@ -48,7 +48,6 @@ function Group() {
                 setCurrentMessages(prevMessages => [...prevMessages, data])
             })
             socket.on('bad_disconnect', (data) => {
-                console.log(data)
                 const currentRoom = data.filter(data => data.room_id == id)
                 setActiveUsers(currentRoom[0].users)
             })
