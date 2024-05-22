@@ -16,7 +16,7 @@ pipenv install
 StudyBuddies is a simple and straightforward chat app.
 Users log in as either teacher or student and join the appropriate chat room. Once there, users can activate and deactivate the chat as needed, or send messages for others to read either while connected or later when they connect.
 
-![General Usage of StudyBuddies] (client/src/media/StudyBuddiesGIF.gif)
+![General Usage of StudyBuddies](client/src/media/StudyBuddiesGIF.gif)
 
 ## Credits
 
