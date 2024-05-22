@@ -50,12 +50,14 @@ enrollments = db.Table(
     db.Column('student_id', db.Integer, db.ForeignKey('students.id'), primary_key=True)
 )
 
-# MODELS MODS
 # update Teacher's students and Students to teachers
     # students = db.relationship(
     #     'Student', secondary=enrollments, back_populates='teachers')
     # teachers = db.relationship(
     # 'Teacher', secondary=enrollments, back_populates='students')
+
+# need ass table for Teachers, students, groups to admins
+
 
 
 # APP MODS

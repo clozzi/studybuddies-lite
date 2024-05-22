@@ -7,6 +7,7 @@ from flask_socketio import emit, join_room, leave_room
 from sqlalchemy.exc import IntegrityError
 
 
+
 class Home(Resource, SerializerMixin):
     def get(self):
         return {'message':'Project Server'}
@@ -14,8 +15,6 @@ api.add_resource(Home, '/')
 
 
 
-
-# for testing purposes only
 class Signup(Resource, SerializerMixin):
 
     def post(self):
@@ -58,7 +57,6 @@ class Signup(Resource, SerializerMixin):
             return {'error': 'Could not create user'}, 422
         
 api.add_resource(Signup, '/api/signup')
-#  remove signup after testing
 
 
 
