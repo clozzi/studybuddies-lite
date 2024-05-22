@@ -20,6 +20,6 @@ Users log in as either teacher or student and join the appropriate chat room. On
 
 ## Credits
 
-Flatiron
-Flask-SocketIO
-Socket.io
+- ![Flatiron](https://flatironschool.com/our-courses/)
+- ![Flask-SocketIO Docs](https://flask-socketio.readthedocs.io/en/latest/)
+- ![Socket.io Docs](https://socket.io/docs/v4/)
