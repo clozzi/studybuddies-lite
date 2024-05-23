@@ -6,9 +6,17 @@ StudyBuddies is a chat application for students and teachers. Before I left teac
 
 ## Installation
 
+Install dependencies and start up the client/server
 ```bash
 pipenv install
-npm install
+pipenv shell
+npm install --prefix client
+cd server
+python app.py
+```
+Open a new terminal
+```bash
+npm run dev --prefix client
 ```
 
 ## Usage
