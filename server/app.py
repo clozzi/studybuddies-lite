@@ -1,4 +1,4 @@
-from flask import request, session
+from flask import request, session, render_template
 from flask_restful import Resource
 from config import sio, app, api, db
 from models import Teacher, Student, Group, Message
@@ -8,11 +8,14 @@ from sqlalchemy.exc import IntegrityError
 
 
 
-class Home(Resource, SerializerMixin):
-    def get(self):
-        return {'message':'Project Server'}
-api.add_resource(Home, '/')
-
+# class Home(Resource, SerializerMixin):
+#     def get(self):
+#         return {'message':'Project Server'}
+# api.add_resource(Home, '/')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template("index.html")
 
 
 class Login(Resource, SerializerMixin):
