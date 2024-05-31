@@ -1,4 +1,9 @@
-from flask import Flask
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+
+from flask import Flask, render_template
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -8,11 +13,25 @@ from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 
 
-app = Flask(__name__)
+# app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+)
 
 app.config['SECRET_KEY'] = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# 
+app.json.compact = False
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
+# 
 
 app.secret_key = 'fe98017e6cafb94d4c075d447650b793'
 
