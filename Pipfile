@@ -14,10 +14,6 @@ sqlalchemy = "*"
 sqlalchemy-serializer = "*"
 faker = "*"
 flask-bcrypt = "*"
-python-dotenv = "*"
-honcho = "*"
-gunicorn = "*"
-psycopg2-binary = "*"
 
 [dev-packages]
 
