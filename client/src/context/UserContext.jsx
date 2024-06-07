@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext({})
 
-var socket = io('http://localhost:5555', { autoConnect: false });
+const socket = io('http://localhost:5555', { autoConnect: false });
 
 
 function UserProvider({ children }) {

@@ -79,7 +79,7 @@ function Login() {
                         onChange={formik.handleChange}
                         className="login-switch-input"
                     />
-                    <label for="teacher" className="login-switch-label">Teacher</label>
+                    <label htmlFor="teacher" className="login-switch-label">Teacher</label>
                     <input 
                         name="role" 
                         type="radio"
@@ -88,7 +88,7 @@ function Login() {
                         onChange={formik.handleChange}
                         className="login-switch-input"
                     />
-                    <label for="student" className="login-switch-label">Student</label>
+                    <label htmlFor="student" className="login-switch-label">Student</label>
                     <p style={{ color: "red" }}>{formik.errors.role}</p>
                 </div>
                 <button type="submit" className="login-button">Submit</button>
